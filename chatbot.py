@@ -97,8 +97,8 @@ def bot_reply(text):
   # bot menjawab jika result > 0.6
   if result[0][response_index] > 0.6:
     for classes in data['intents']:
-      if responses['tag'] == bot_answer:
-        response = classes['responses']
+      if classes['tag'] == bot_answer:
+        responses = classes['responses']
     return str(random.choices(responses[0]))
   else:
     return "Duh maaf, aku ngga ngerti"
