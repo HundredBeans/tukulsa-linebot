@@ -99,7 +99,7 @@ def bot_reply(text):
     for classes in data['intents']:
       if classes['tag'] == bot_answer:
         responses = classes['responses']
-    return str(random.choices(responses[0]))
+    return str(random.choices(responses)[0])
   else:
     return "Duh maaf, aku ngga ngerti"
 
