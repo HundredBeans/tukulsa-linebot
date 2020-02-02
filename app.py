@@ -14,6 +14,7 @@
 
 from __future__ import unicode_literals
 
+import re
 import datetime
 import errno
 import json
@@ -104,9 +105,17 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
+    profile = line_bot_api.get_profile(event.source.user_id)
+    display_name = profile.display_name
+    # Pattern nomor dan nominal pulsa
+    nomor_pattern = r"08\d{9,11}"
+    nominal_pattern = r"\d+\s?ribu|\d+.000"
     # chatbot
     reply_message = bot_reply(text)
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(reply_message))
+    # Tambahin display name ke dalam message
+    formatted_message = reply_message.format(display_name)
+    line_bot_api.reply_message(
+        event.reply_token, TextSendMessage(formatted_message))
     # Other LINE Feature
     # if text == 'profile':
     #     if isinstance(event.source, SourceUser):
