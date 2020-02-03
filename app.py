@@ -123,18 +123,13 @@ def handle_text_message(event):
     status = get_chat_info(user_id)
     if status["status_number"] and status["status_nominal"]:
         reply_message = response_flow(user_id, nomor, nominal)
-        buttons_template = ButtonsTemplate(text='Konfirmasi Pembayaran', actions=[
+        buttons_template = ButtonsTemplate(text=reply_message, actions=[
             MessageAction(label= 'Yakin', text='yakin 100%'),
             MessageAction(label='Batal', text='gajadi deh')
         ])
         template_message = TemplateSendMessage(
             alt_text='Konfirmasi Pembelian', template=buttons_template)
-        line_bot_api.reply_message(
-            event.reply_token, [
-                TextSendMessage(reply_message),
-                template_message
-            ]
-        )
+        line_bot_api.reply_message(event.reply_token, template_message)
     elif len(nomor) == 1 or len(nominal) == 1:
         reply_message = response_flow(user_id, nomor, nominal)
         formatted_message = reply_message.format(display_name)
