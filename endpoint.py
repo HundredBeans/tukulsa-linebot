@@ -12,7 +12,7 @@ def post_user(line_id, display_name, user_status):
     url = base_url + 'users'
     headers = {'content-type' : 'application/json'}
 
-    data = requests.get(url, json = json_data, headers = headers).text
+    data = requests.post(url, json = json_data, headers = headers).text
     parsed = json.loads(data)
     return parsed
 
