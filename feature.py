@@ -50,7 +50,7 @@ def response_flow(line_id, nomor, nominal):
             "ribu", '000').replace(".", "").replace(",", "")
         if data_provider is not False:
             # Tambahin provider di status
-            status = update_all(line_id, nomor[0], nominal, True, True)
+            status = update_all(line_id, nomor[0], nominal, True, True, data_provider["provider"])
             return "Yakin mau beli pulsa {} {} ke nomor {}?".format(
                     data_provider["provider"], nominal, nomor[0])
         else:
@@ -64,13 +64,13 @@ def response_flow(line_id, nomor, nominal):
         status = get_chat_info(line_id)
         if status['nominal'] and data_provider is not False:
             # Update nomor ke backend
-            update = update_number(line_id, nomor[0], True)
+            update = update_number(line_id, nomor[0], True, data_provider['provider'])
             return "Yakin mau beli pulsa {} {} ke nomor {}?".format(
                 data_provider["provider"], status['nominal'], nomor[0])
         
         elif data_provider is not False:
             # Update nomor ke backend
-            update = update_number(line_id, nomor[0], True)
+            update = update_number(line_id, nomor[0], True, data_provider['provider'])
             return "Silahkan dipilih pulsa {}nya kak".format(data_provider["provider"])
         
         else:

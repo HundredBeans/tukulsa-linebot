@@ -114,7 +114,7 @@ def handle_text_message(event):
     display_name = profile.display_name
     user_status = profile.status_message
     # add user into backend database
-    add_user = post_user(user_id, display_name, user_status)
+    add_user = post_user(user_id, display_name)
     # Pattern nomor dan nominal pulsa
     nomor_pattern = r"08\d{9,11}"
     nominal_pattern = r"\d+\s?ribu|\d+.000"
