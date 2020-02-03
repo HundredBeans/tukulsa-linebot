@@ -132,7 +132,7 @@ def handle_text_message(event):
         line_bot_api.reply_message(
             event.reply_token, [
                 TextSendMessage(reply_message),
-                template_message)
+                template_message
             ]
         )
     elif len(nomor) == 1 or len(nominal) == 1:
