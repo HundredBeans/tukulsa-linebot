@@ -17,7 +17,7 @@ with open("intents.json") as file:
   data = json.load(file)
 
 try: 
-  with open("chatbot.pickel", "rb") as c:
+  with open("chatbot.pickle", "rb") as c:
     words, labels, training,output=pickle.load(c)
 
 except:
@@ -70,7 +70,7 @@ except:
   training = numpy.array(training)
   output = numpy.array(output)
 
-  with open("chatbot.pickel") as c:
+  with open("chatbot.pickle", "wb") as c:
     pickle.dump((words,labels,training,output),c)
 
   tensorflow.reset_default_graph()
@@ -83,10 +83,10 @@ net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
 
-try:
-  if os.path.exists("model.tflarn.meta"):
-    model.save("model.tflearn")
-except:
+
+if os.path.exists("model.tflearn.meta"):
+  model.load("model.tflearn")
+else:
   model.fit(training, output, n_epoch=1000, batch_size=3, show_metric=True)
   model.save("model.tflearn")
 
@@ -139,5 +139,4 @@ def bot_action():
         else:
           print("Tukulsa: Duh, aku kudu jawab piye? Ngga ngerti aku")
 
-
-# BotAction()
+bot_action()
