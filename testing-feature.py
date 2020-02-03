@@ -1,6 +1,8 @@
 import re
 import requests
-
+from mobilepulsa import get_operator,get_order_status, buying_pulsa 
+import os
+import pickle
 
 def cek_provider(nomor):
     daftar_operator = [
@@ -236,6 +238,7 @@ def testing_flow():
         elif text == "yakin 100%":
             # Cek kalo user itu sudah ada data nomor dan nominal
             # user_info = requests.get()
+            
 
             if user_status["status_nomor"] and user_status["status_nominal"]:
                 bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
@@ -260,6 +263,7 @@ def testing_flow():
             user_status["nominal"] = ""
             user_status["nomor"] = ""
             ###########################
+     
         print(bot_message)
 
 testing_flow()

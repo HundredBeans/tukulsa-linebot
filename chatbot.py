@@ -10,60 +10,70 @@ import tflearn
 import tensorflow
 import random
 import json
+import os
+import pickle
 
 with open("intents.json") as file:
   data = json.load(file)
 
-words = [] # list kata di pattern
-labels = [] # list tag
-docs_x = [] # list kalimat di pattern
-docs_y = [] # list tag dengan jumlah sama dengan jumlah pattern
+try: 
+  with open("chatbot.pickel", "rb") as c:
+    words, labels, training,output=pickle.load(c)
 
-for intent in data ["intents"]:
-  for pattern in intent["patterns"]:
-    # Mecah pattern jadi perkata
-    wrds = nltk.word_tokenize(pattern)
-    words.extend(wrds)
-    docs_x.append(wrds)
-    docs_y.append(intent["tag"])
+except:
+  words = [] # list kata di pattern
+  labels = [] # list tag
+  docs_x = [] # list kalimat di pattern
+  docs_y = [] # list tag dengan jumlah sama dengan jumlah pattern
 
-  if intent["tag"] not in labels:
-    labels.append(intent["tag"])
+  for intent in data ["intents"]:
+    for pattern in intent["patterns"]:
+      # Mecah pattern jadi perkata
+      wrds = nltk.word_tokenize(pattern)
+      words.extend(wrds)
+      docs_x.append(wrds)
+      docs_y.append(intent["tag"])
 
-# Memecah tiap kata menjadi lebih kecil dan tidak redundant
-words = [stemmer.stem(w.lower()) for w in words if w != "?"]
-words = sorted(list(set(words)))
+    if intent["tag"] not in labels:
+      labels.append(intent["tag"])
 
-labels = sorted(labels)
+  # Memecah tiap kata menjadi lebih kecil dan tidak redundant
+  words = [stemmer.stem(w.lower()) for w in words if w != "?"]
+  words = sorted(list(set(words)))
 
-training = []
-output = []
+  labels = sorted(labels)
 
-# Membentuk model dari tag dalam bentuk binary list
-out_empty = [0 for _ in range(len(labels))]
+  training = []
+  output = []
 
-for x, doc in enumerate(docs_x):
-  bag = []
+  # Membentuk model dari tag dalam bentuk binary list
+  out_empty = [0 for _ in range(len(labels))]
 
-  # Kata yang udah distem di words dicek per huruf apakah ada di tiap kalimat di pattern
-  wrds = [stemmer.stem(w.lower()) for w in doc]
+  for x, doc in enumerate(docs_x):
+    bag = []
 
-  for w in words:
-    if w in wrds:
-      bag.append(1)
-    else:
-      bag.append(0)
-  # Bikin model label dalam bentuk binary
-  output_row = out_empty[:]
-  output_row[labels.index(docs_y[x])] = 1
-  # bikin model words atau kata dari tiap pattern
-  training.append(bag)
-  output.append(output_row)
+    # Kata yang udah distem di words dicek per huruf apakah ada di tiap kalimat di pattern
+    wrds = [stemmer.stem(w.lower()) for w in doc]
 
-training = numpy.array(training)
-output = numpy.array(output)
+    for w in words:
+      if w in wrds:
+        bag.append(1)
+      else:
+        bag.append(0)
+    # Bikin model label dalam bentuk binary
+    output_row = out_empty[:]
+    output_row[labels.index(docs_y[x])] = 1
+    # bikin model words atau kata dari tiap pattern
+    training.append(bag)
+    output.append(output_row)
 
-tensorflow.reset_default_graph()
+  training = numpy.array(training)
+  output = numpy.array(output)
+
+  with open("chatbot.pickel") as c:
+    pickle.dump((words,labels,training,output),c)
+
+  tensorflow.reset_default_graph()
 
 net = tflearn.input_data(shape=[None, len(training[0])])
 net = tflearn.fully_connected(net, 8)
@@ -73,8 +83,12 @@ net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
 
-model.fit(training, output, n_epoch=1500, batch_size=8, show_metric=True)
-model.save("model.tflearn")
+try:
+  if os.path.exists("model.tflarn.meta"):
+    model.save("model.tflearn")
+except:
+  model.fit(training, output, n_epoch=1500, batch_size=8, show_metric=True)
+  model.save("model.tflearn")
 
 def bag_words(sentence):
     bag=[0 for _ in range(len(words))]
