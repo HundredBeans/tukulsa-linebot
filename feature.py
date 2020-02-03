@@ -91,22 +91,22 @@ def response_flow(line_id, nomor, nominal):
         else:
             return "Beli pulsa {} ke nomor apa ya kak?".format(nominal)
 
-### FLOW KONFIRMASI PEMBELIAN PULSA ###
-if text == "yakin 100%":
-# Cek kalo user itu sudah ada data nomor dan nominal
-    status = get_chat_info(line_id)
-    if status["status_number"] and user_status["status_nominal"]:
-        bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
-        # Nembak requests ke mobile pulsa #
-        # Reset status #
-        reset = update_all(line_id, "", "", False, False)
-    else:
-        bot_message = "apanya yang yakin 100%?"
+# ### FLOW KONFIRMASI PEMBELIAN PULSA ###
+# if text == "yakin 100%":
+# # Cek kalo user itu sudah ada data nomor dan nominal
+#     status = get_chat_info(line_id)
+#     if status["status_number"] and user_status["status_nominal"]:
+#         bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
+#         # Nembak requests ke mobile pulsa #
+#         # Reset status #
+#         reset = update_all(line_id, "", "", False, False)
+#     else:
+#         bot_message = "apanya yang yakin 100%?"
 
-elif text == "gajadi deh":
-    bot_message = "Oh yaudah gapapa kak"
-    # Reset status #
-    reset = update_all(line_id, "", "", False, False)
+# elif text == "gajadi deh":
+#     bot_message = "Oh yaudah gapapa kak"
+#     # Reset status #
+#     reset = update_all(line_id, "", "", False, False)
 
 ############################## TESTING FLOW ############################################
 def testing_flow():
