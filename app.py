@@ -121,11 +121,19 @@ def handle_text_message(event):
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(formatted_message))
             
-    if text == "yakin 100%":
+    elif text == "yakin 100%":
 # Cek kalo user itu sudah ada data nomor dan nominal
         status = get_chat_info(user_id)
         if status["status_number"] and user_status["status_nominal"]:
             bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
+            buttons_template = ButtonsTemplate(text='Konfirmasi Pembayaran', actions=[
+                URIAction(label='Bayar', uri='https://app.sandbox.midtrans.com/snap/v2/vtweb/0f39f420-50a7-4060-b5dd-9d5956b3c3a2'),
+                MessageAction(label='Batal', text='gajadi deh')
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='Konfirmasi Pembayaran', template=buttons_template)
+            line_bot_api.reply_message(event.reply_token, template_message)
+
             # Nembak requests ke mobile pulsa #
             # Reset status #
             reset = update_all(user_id, "", "", False, False)
