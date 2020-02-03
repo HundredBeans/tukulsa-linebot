@@ -121,51 +121,55 @@ def handle_text_message(event):
     nomor = re.findall(nomor_pattern, text)
     nominal = re.findall(nominal_pattern, text)
     status = get_chat_info(user_id)
-    if status["status_number"] and status["status_nominal"]:
-        reply_message = response_flow(user_id, nomor, nominal)
-        buttons_template = ButtonsTemplate(text=reply_message, actions=[
-            MessageAction(label= 'Yakin', text='yakin 100%'),
-            MessageAction(label='Batal', text='gajadi deh')
-        ])
-        template_message = TemplateSendMessage(
-            alt_text='Konfirmasi Pembelian', template=buttons_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
-    elif len(nomor) == 1 or len(nominal) == 1:
-        reply_message = response_flow(user_id, nomor, nominal)
-        formatted_message = reply_message.format(display_name)
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(formatted_message))
+
+    if len(nomor) == 1 or len(nominal) == 1:
+        if status["status_number"] and status["status_nominal"]:
+            reply_message = response_flow(user_id, nomor, nominal)
+            buttons_template = ButtonsTemplate(text=reply_message, actions=[
+                MessageAction(label= 'Yakin', text='yakin 100%'),
+                MessageAction(label='Batal', text='gajadi deh')
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='Konfirmasi Pembelian', template=buttons_template)
+            line_bot_api.reply_message(event.reply_token, template_message)
+        else:
+            reply_message = response_flow(user_id, nomor, nominal)
+            formatted_message = reply_message.format(display_name)
+            print("elif 1", formatted_message)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=formatted_message))
             
     elif text == "yakin 100%":
-# Cek kalo user itu sudah ada data nomor dan nominal
+    # Cek kalo user itu sudah ada data nomor dan nominal
         status = get_chat_info(user_id)
         if status["status_number"] and status["status_nominal"]:
             bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
-            buttons_template = ButtonsTemplate(text='Konfirmasi Pembayaran', actions=[
+            buttons_template = ButtonsTemplate(text = bot_message, actions=[
                 URIAction(label='Bayar', uri='https://app.sandbox.midtrans.com/snap/v2/vtweb/0f39f420-50a7-4060-b5dd-9d5956b3c3a2'),
                 MessageAction(label='Batal', text='gajadi deh')
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembayaran', template=buttons_template)
+            print("yakin 100%", bot_message)
             line_bot_api.reply_message(event.reply_token, template_message)
 
             # Nembak requests ke mobile pulsa #
             # Reset status #
-            reset = update_all(user_id, "", "", False, False)
+            reset = update_all(user_id, "", "", False, False, "")
         else:
             bot_message = "apanya yang yakin 100%?"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage())
 
     elif text == "gajadi deh":
         bot_message = "Oh yaudah gapapa kak"
         # Reset status #
-        reset = update_all(user_id, "", "", False, False)
+        reset = update_all(user_id, "", "", False, False, "")
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
     else:
         # chatbot
         reply_message = bot_reply(text)
         # Tambahin display name ke dalam message
         formatted_message = reply_message.format(display_name)
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(formatted_message))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=formatted_message))
     # Other LINE Feature
     # if text == 'profile':
     #     if isinstance(event.source, SourceUser):
