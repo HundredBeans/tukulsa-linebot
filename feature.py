@@ -62,7 +62,7 @@ def response_flow(line_id, nomor, nominal):
         data_provider = cek_provider(nomor_kode)
         ### Cek apakah user sudah ngasih info nominal ###
         status = get_chat_info(line_id)
-        if status['nominal'] and data_provider is not False:
+        if status['status_nominal'] and data_provider is not False:
             # Update nomor ke backend
             update = update_number(line_id, nomor[0], True, data_provider['provider'])
             return "Yakin mau beli pulsa {} {} ke nomor {}?".format(
