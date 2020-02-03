@@ -5,7 +5,7 @@ import requests
 def cek_provider(nomor):
     daftar_operator = [
         {
-            "prodvider": "telkomsel",
+            "provider": "telkomsel",
             "no_provider": 1,
             "nomor": ["0811", "0812", "0813", "0821", "0822", "0852", "0853", "0823", "0851"],
         },
@@ -157,7 +157,7 @@ def testing_flow():
             print("status nomor dan nominal adalah False")
         text = input()
         ##### FLOW INPUT NOMOR DAN NOMINAL ######
-        nomor_pattern = r"08\d{9,11}"
+        nomor_pattern = r"08\d{8,11}"
         nominal_pattern = r"\d+\s?ribu|\d+.000"
         nomor = re.findall(nomor_pattern, text)
         nominal = re.findall(nominal_pattern, text)
@@ -224,12 +224,13 @@ def testing_flow():
             user_status["nominal"] = nominal
             # cari info apakah user sudah masukin nomor sebelumnya
             # user_info = requests.get()
-            if user_status["status_nomor"]:
+            if user_status["status_nomor"] and data_provider is not False:
                 bot_message = "Yakin mau beli pulsa {} {} ke nomor {}?".format(
                     data_provider["provider"], nominal, user_status["nomor"])
-            
-            else:
+            elif data_provider is not False:
                 bot_message = "Beli pulsa {} ke nomor apa ya kak?".format(nominal)
+            else:
+                bot_message = "Nomornya ngga valid tuh kak, coba dicek lagi"
 
         ### FLOW KONFIRMASI PEMBELIAN PULSA ###
         elif text == "yakin 100%":
