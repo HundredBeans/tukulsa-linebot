@@ -120,11 +120,11 @@ def handle_text_message(event):
     nominal_pattern = r"\d+\s?ribu|\d+.000"
     nomor = re.findall(nomor_pattern, text)
     nominal = re.findall(nominal_pattern, text)
-    status = get_chat_info(user_id)
 
     if len(nomor) == 1 or len(nominal) == 1:
+        reply_message = response_flow(user_id, nomor, nominal)
+        status = get_chat_info(user_id)
         if status["status_number"] and status["status_nominal"]:
-            reply_message = response_flow(user_id, nomor, nominal)
             buttons_template = ButtonsTemplate(text=reply_message, actions=[
                 MessageAction(label= 'Yakin', text='yakin 100%'),
                 MessageAction(label='Batal', text='gajadi deh')
@@ -133,9 +133,7 @@ def handle_text_message(event):
                 alt_text='Konfirmasi Pembelian', template=buttons_template)
             line_bot_api.reply_message(event.reply_token, template_message)
         else:
-            reply_message = response_flow(user_id, nomor, nominal)
             formatted_message = reply_message.format(display_name)
-            print("elif 1", formatted_message)
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=formatted_message))
             
     elif text == "yakin 100%":
@@ -149,7 +147,6 @@ def handle_text_message(event):
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembayaran', template=buttons_template)
-            print("yakin 100%", bot_message)
             reset = update_all(user_id, "", "", False, False, "")
             line_bot_api.reply_message(event.reply_token, template_message)
 
