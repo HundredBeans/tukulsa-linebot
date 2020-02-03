@@ -444,5 +444,3 @@ def testing_flow_lokal():
             ###########################
      
         print(bot_message)
-
-testing_flow()
