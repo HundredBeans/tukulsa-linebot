@@ -53,7 +53,7 @@ from chatbot import bot_reply
 # feature
 from feature import response_flow
 # endpoint
-from endpoint import post_user
+from endpoint import post_user, get_chat_info
 
 
 app = Flask(__name__)
