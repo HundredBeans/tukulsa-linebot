@@ -52,6 +52,8 @@ from linebot.models import (
 from chatbot import bot_reply
 # feature
 from feature import response_flow
+# endpoint
+from endpoint import post_user
 
 
 app = Flask(__name__)
@@ -110,6 +112,9 @@ def handle_text_message(event):
     user_id = event.source.user_id
     profile = line_bot_api.get_profile(user_id)
     display_name = profile.display_name
+    user_status = profile.status_message
+    # add user into backend database
+    add_user = post_user(user_id, display_name, user_status)
     # Pattern nomor dan nominal pulsa
     nomor_pattern = r"08\d{9,11}"
     nominal_pattern = r"\d+\s?ribu|\d+.000"

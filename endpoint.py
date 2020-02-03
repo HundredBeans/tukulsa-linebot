@@ -3,6 +3,18 @@ import json
 
 base_url = 'https://tukulsa-new-test.herokuapp.com/'
 
+def post_user(line_id, display_name, user_status):
+    json_data = {
+        'line_id': line_id,
+        'display_name': display_name,
+        'user_status': user_status
+    }
+    url = base_url + 'users'
+    headers = {'content-type' : 'application/json'}
+
+    data = requests.get(url, json = json_data, headers = headers).text
+    parsed = json.loads(data)
+    return parsed
 
 def get_chat_info(line_id):
     json_data = {
@@ -55,6 +67,3 @@ def update_all(line_id, number, nominal, number_status, nominal_status):
     data = requests.put(url, json = json_data, headers = headers).text
     parsed = json.loads(data)
     return parsed
-
-print(update_number("daffa", "08159898344", True))
-print(get_chat_info("daffa")['phone_number'])
