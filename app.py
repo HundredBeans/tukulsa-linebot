@@ -53,7 +53,7 @@ from chatbot import bot_reply
 # feature
 from feature import response_flow
 # endpoint
-from endpoint import post_user, get_chat_info
+from endpoint import post_user, get_chat_info, update_all
 
 
 app = Flask(__name__)
@@ -150,11 +150,11 @@ def handle_text_message(event):
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembayaran', template=buttons_template)
             print("yakin 100%", bot_message)
+            reset = update_all(user_id, "", "", False, False, "")
             line_bot_api.reply_message(event.reply_token, template_message)
 
             # Nembak requests ke mobile pulsa #
             # Reset status #
-            reset = update_all(user_id, "", "", False, False, "")
         else:
             bot_message = "apanya yang yakin 100%?"
             line_bot_api.reply_message(event.reply_token, TextSendMessage())
