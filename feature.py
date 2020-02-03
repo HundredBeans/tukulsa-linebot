@@ -1,5 +1,6 @@
 import re
 import requests
+
 from endpoint import get_chat_info, update_all, update_nominal, update_number
 
 
@@ -416,6 +417,7 @@ def testing_flow_lokal():
         elif text == "yakin 100%":
             # Cek kalo user itu sudah ada data nomor dan nominal
             # user_info = requests.get()
+            
 
             if user_status["status_nomor"] and user_status["status_nominal"]:
                 bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
@@ -440,6 +442,7 @@ def testing_flow_lokal():
             user_status["nominal"] = ""
             user_status["nomor"] = ""
             ###########################
+     
         print(bot_message)
 
 testing_flow()
