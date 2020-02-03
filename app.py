@@ -105,7 +105,8 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
-    profile = line_bot_api.get_profile(event.source.user_id)
+    user_id = event.source.user_id
+    profile = line_bot_api.get_profile(user_id)
     display_name = profile.display_name
     # Pattern nomor dan nominal pulsa
     nomor_pattern = r"08\d{9,11}"
