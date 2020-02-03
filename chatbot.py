@@ -104,26 +104,26 @@ def bot_reply(text):
     return "Duh maaf, aku ngga ngerti"
 
 
-# def BotAction():
-#     print("Start talking with Me")
-#     print("========================")
+def bot_action():
+    print("Start talking with Me")
+    print("========================")
     
-#     while True:
-#         inp=input("Kamu:")
-#         if inp.lower() == "quit":
-#             break
-#         result=model.predict([bag_words(inp)])
-#         # index tag dengan probabilitas tertinggi
-#         response_index=numpy.argmax(result)
-#         bot_answer=labels[response_index]
-#         # bot menjawab jika result > 0.7
-#         if result[0][response_index] > 0.6:
-#           for tg in data['intents']:
-#               if tg['tag']==bot_answer:
-#                   responses=tg['responses']
-#           print("Tukulsa:",str(random.choices(responses)[0]))
-#         else:
-#           print("Tukulsa: Duh, aku kudu jawab piye? Ngga ngerti aku")
+    while True:
+        inp=input("Kamu:")
+        if inp.lower() == "quit":
+            break
+        result=model.predict([bag_words(inp)])
+        # index tag dengan probabilitas tertinggi
+        response_index=numpy.argmax(result)
+        bot_answer=labels[response_index]
+        # bot menjawab jika result > 0.7
+        if result[0][response_index] > 0.6:
+          for tg in data['intents']:
+              if tg['tag']==bot_answer:
+                  responses=tg['responses']
+          print("Tukulsa:",str(random.choices(responses)[0]))
+        else:
+          print("Tukulsa: Duh, aku kudu jawab piye? Ngga ngerti aku")
 
 
 # BotAction()

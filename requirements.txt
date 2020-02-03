@@ -6,3 +6,4 @@ numpy
 tflearn
 tensorflow==1.14
 sastrawi
+requests

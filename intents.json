@@ -14,49 +14,43 @@
   {
     "tag": "halo",
     "patterns": ["halo", "Hi"],
-    "responses": ["haloo"],
+    "responses": ["haloo kak {}"],
     "context_set": ""
   },
   {
     "tag": "beli pulsa",
     "patterns": ["mau beli", "beli pulsa"],
-    "responses": ["oke kak, boleh minta nomer hapenya kak?"],
-    "context_set": ""
-  },
-  {
-    "tag": "nomor hape",
-    "patterns": ["Pake regex"],
-    "responses": ["Mau beli nominal yang berapa kak?"],
+    "responses": ["oke kak, boleh minta nomer hapenya kak? Formatnya 08xxxxxxxxxx ya"],
     "context_set": ""
   },
   {
     "tag": "complaint",
     "patterns": ["Kok belum masuk", "Kok belum nambah", "sudah transfer, tapi", "mana nih pulsanya"],
-    "responses": ["oke kak, saya akan bantu cek status pembeliannya dulu ya kak"],
+    "responses": ["oke kak {}, saya akan bantu cek status pembeliannya dulu ya kak"],
     "context_set": ""
   },
   {
     "tag": "terima kasih",
     "patterns": ["terima kasih", "thank you", "arigatou", "suwun", "makasih", "arigato"],
-    "responses": ["iya kak, sama-sama :)"],
+    "responses": ["iya kak {}, sama-sama :)"],
     "context_set": ""
   },
   {
     "tag": "cek riwayat",
     "patterns": ["Mau cek riwayat transaksi"],
-    "responses": ["oke kak, berikut riwayat transaksinya ya kak"],
+    "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
     "context_set": ""
   },
   {
     "tag": "cek riwayat kemarin",
     "patterns": ["mau cek riwayat transaksi kemarin", "kemarin"],
-    "responses": ["oke kak, kemarin kakak transaksi ....."],
+    "responses": ["oke kak {}, kemarin kakak transaksi ....."],
     "context_set": ""
   },
   {
     "tag": "cek riwayat bulan",
     "patterns": ["mau cek riwayat transaksi pada bulan januari", "transaksi februari", "transaksi bulan lalu", "transaksi maret", "transaksi april", "transaksi mei", "transaksi juni", "transaksi juli", "transaksi agustus", "transaksi september", "transaksi oktober", "transaksi november", "transaksi desember"],
-    "responses": ["Riwayat transaksi pulsanya seperti ini ya kak"],
+    "responses": ["Riwayat transaksi pulsanya kak {} seperti ini ya..."],
     "context_set": ""
   },
   {
