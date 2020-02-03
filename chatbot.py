@@ -138,5 +138,3 @@ def bot_action():
           print("Tukulsa:",str(random.choices(responses)[0]))
         else:
           print("Tukulsa: Duh, aku kudu jawab piye? Ngga ngerti aku")
-
-bot_action()
