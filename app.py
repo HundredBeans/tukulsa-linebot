@@ -180,8 +180,12 @@ def handle_text_message(event):
             # Create Carousel Columns
             product_columns = []
             for product in list_product[:9]:
+                if len(product['nominal']) > 8:
+                    show = "Rp.{}".format(product['price'])
+                else:
+                    show = "Pulsa {}".format(product['nominal'])
                 carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
-                    MessageAction(label="Rp. {}".format(product['nominal']), text=product['nominal'])
+                    MessageAction(label=show, text=product['nominal'])
                 ])
                 product_columns.append(carousel_column)
             # Create Carousel Template
