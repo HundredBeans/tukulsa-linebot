@@ -37,7 +37,7 @@
   },
   {
     "tag": "cek riwayat",
-    "patterns": ["Mau cek riwayat transaksi"],
+    "patterns": ["Mau cek riwayat transaksi", "liat riwayat transaksi", "cek status pembelian", "cek status dong", "cek riwayat transaksi dong ka", "tadi aku beli pulsa apa ya", "terakhir aku beli pulsa apa", "terakhir aku beli pulsa kemana", "mau liat transaksi aku yang terakhir"],
     "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
     "context_set": ""
   },
