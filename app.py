@@ -262,18 +262,171 @@ def handle_text_message(event):
 
     elif text == "gajadi deh":
         bot_message = "Oh yaudah gapapa kak"
-        # Tambahin cancel pembayaran midtrans #
-
         # Reset status #
         reset = update_all(user_id, "", "", False, False, "")
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
+    # List Product by operator #    
+    elif text == "telkomsel":
+        bot_message = "Berikut pulsa {}nya kak".format('telkomsel')
+        message = TextSendMessage(text=bot_message)
+        # GET Produk filter by provider
+        list_product = get_product_by('telkomsel')
+        # Create Carousel Columns
+        product_columns = []
+        for product in list_product[:9]:
+            if len(product['nominal']) > 8:
+                show = "Rp.{}".format(product['price'])
+            else:
+                show = "Pulsa {}".format(product['nominal'])
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                MessageAction(label=show, text=product['nominal'])
+            ])
+            product_columns.append(carousel_column)
+        # Create Carousel Template
+        carousel_template = CarouselTemplate(columns=product_columns)
+        template_message = TemplateSendMessage(
+            alt_text='List Product', template=carousel_template)
+        line_bot_api.reply_message(event.reply_token, [message, template_message])
+
+    elif text == "indosat":
+        bot_message = "Berikut pulsa {}nya kak".format('indosat')
+        message = TextSendMessage(text=bot_message)
+        # GET Produk filter by provider
+        list_product = get_product_by('indosat')
+        # Create Carousel Columns
+        product_columns = []
+        for product in list_product[:9]:
+            if len(product['nominal']) > 8:
+                show = "Rp.{}".format(product['price'])
+            else:
+                show = "Pulsa {}".format(product['nominal'])
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                MessageAction(label=show, text=product['nominal'])
+            ])
+            product_columns.append(carousel_column)
+        # Create Carousel Template
+        carousel_template = CarouselTemplate(columns=product_columns)
+        template_message = TemplateSendMessage(
+            alt_text='List Product', template=carousel_template)
+        line_bot_api.reply_message(event.reply_token, [message, template_message])
+    
+    elif text == "xl":
+        bot_message = "Berikut pulsa {}nya kak".format('xl')
+        message = TextSendMessage(text=bot_message)
+        # GET Produk filter by provider
+        list_product = get_product_by('xl')
+        # Create Carousel Columns
+        product_columns = []
+        for product in list_product[:9]:
+            if len(product['nominal']) > 8:
+                show = "Rp.{}".format(product['price'])
+            else:
+                show = "Pulsa {}".format(product['nominal'])
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                MessageAction(label=show, text=product['nominal'])
+            ])
+            product_columns.append(carousel_column)
+        # Create Carousel Template
+        carousel_template = CarouselTemplate(columns=product_columns)
+        template_message = TemplateSendMessage(
+            alt_text='List Product', template=carousel_template)
+        line_bot_api.reply_message(event.reply_token, [message, template_message])
+    
+    elif text == "three":
+        bot_message = "Berikut pulsa {}nya kak".format('three')
+        message = TextSendMessage(text=bot_message)
+        # GET Produk filter by provider
+        list_product = get_product_by('three')
+        # Create Carousel Columns
+        product_columns = []
+        for product in list_product[:9]:
+            if len(product['nominal']) > 8:
+                show = "Rp.{}".format(product['price'])
+            else:
+                show = "Pulsa {}".format(product['nominal'])
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                MessageAction(label=show, text=product['nominal'])
+            ])
+            product_columns.append(carousel_column)
+        # Create Carousel Template
+        carousel_template = CarouselTemplate(columns=product_columns)
+        template_message = TemplateSendMessage(
+            alt_text='List Product', template=carousel_template)
+        line_bot_api.reply_message(event.reply_token, [message, template_message])
+    
+    elif text == "axis":
+        bot_message = "Berikut pulsa {}nya kak".format('axis')
+        message = TextSendMessage(text=bot_message)
+        # GET Produk filter by provider
+        list_product = get_product_by('axis')
+        # Create Carousel Columns
+        product_columns = []
+        for product in list_product[:9]:
+            if len(product['nominal']) > 8:
+                show = "Rp.{}".format(product['price'])
+            else:
+                show = "Pulsa {}".format(product['nominal'])
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                MessageAction(label=show, text=product['nominal'])
+            ])
+            product_columns.append(carousel_column)
+        # Create Carousel Template
+        carousel_template = CarouselTemplate(columns=product_columns)
+        template_message = TemplateSendMessage(
+            alt_text='List Product', template=carousel_template)
+        line_bot_api.reply_message(event.reply_token, [message, template_message])
+    
+    elif text == "smartfren":
+        bot_message = "Berikut pulsa {}nya kak".format('smartfren')
+        message = TextSendMessage(text=bot_message)
+        # GET Produk filter by provider
+        list_product = get_product_by('smartfren')
+        # Create Carousel Columns
+        product_columns = []
+        for product in list_product[:9]:
+            if len(product['nominal']) > 8:
+                show = "Rp.{}".format(product['price'])
+            else:
+                show = "Pulsa {}".format(product['nominal'])
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                MessageAction(label=show, text=product['nominal'])
+            ])
+            product_columns.append(carousel_column)
+        # Create Carousel Template
+        carousel_template = CarouselTemplate(columns=product_columns)
+        template_message = TemplateSendMessage(
+            alt_text='List Product', template=carousel_template)
+        line_bot_api.reply_message(event.reply_token, [message, template_message])
+
     else:
         # chatbot
         context = bot_reply(text)
-        reply_message = context_chat[context]
-        # Tambahin display name ke dalam message
-        formatted_message = reply_message.format(display_name)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=formatted_message))
+        if context == "complaint":
+            reply_message = context_chat[context]
+            # Tambahin reply isinya status transaksi terakhir
+            message = TextSendMessage(text=reply_message)
+            line_bot_api.reply_message(event.reply_token, message)
+        elif context == "cek produk":
+            reply_message = context_chat[context]
+            message = TextSendMessage(text=reply_message)
+            # Bikin carousel daftar operator
+            image_carousel_template = ImageCarouselTemplate(columns=[
+                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/telkomsel.png', action=MessageAction(label='Telkomsel', text='telkomsel')),
+                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/indosat.png', action=MessageAction(label='Indosat', text='indosat')),
+                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/xl.png', action=MessageAction(label='XL', text='xl')),
+                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/three.png', action=MessageAction(label='3 (Three)', text='three')),
+                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/axis.png', action=MessageAction(label='Axis', text='axis')),
+                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/smartfren.png', action=MessageAction(label='Smartfren', text='smartfren'))
+            ])
+            template_message = TemplateSendMessage(
+                alt_text="List Product", template=image_carousel_template
+            )
+            line_bot_api.reply_message(event.reply_token, [message, template_message])
+        else:
+            reply_message = context_chat[context]
+            # Tambahin display name ke dalam message
+            formatted_message = reply_message.format(display_name)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=formatted_message))
     # Other LINE Feature
     # if text == 'profile':
     #     if isinstance(event.source, SourceUser):
