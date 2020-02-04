@@ -180,7 +180,7 @@ def handle_text_message(event):
             # Create Carousel Columns
             product_columns = []
             for product in list_product[:9]:
-                carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']) text="harga Rp.{}".format(product['price']), actions=[
+                carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
                     MessageAction(label="Rp. {}".format(product['price']), text=product['nominal'])
                 ])
                 product_columns.append(carousel_column)
