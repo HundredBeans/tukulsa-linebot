@@ -53,7 +53,7 @@ from chatbot import bot_reply, context_chat
 # feature
 from feature import cek_provider
 # endpoint
-from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url
+from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url, get_alltransactions_by, get_latesttransaction_by
 
 
 
@@ -422,6 +422,12 @@ def handle_text_message(event):
                 alt_text="List Product", template=image_carousel_template
             )
             line_bot_api.reply_message(event.reply_token, [message, template_message])
+        elif context == "cek riwayat":
+            reply_message = context_chat[context].format(display_name)
+            # Get Transaction from Backend
+            latest_transaction = get_latesttransaction_by(user_id)
+            text_latest_trx = "Riwayat Transaksi pada {} berupa pulsa {} dengan harga Rp.{} ke nomor {}. Status pembayaran: {} dan status pemesanan (pulsa) : {}".format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
+            line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=reply_message), TextSendMessage(text=text_latest_trx)])
         else:
             reply_message = context_chat[context]
             # Tambahin display name ke dalam message
