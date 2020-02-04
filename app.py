@@ -179,7 +179,7 @@ def handle_text_message(event):
             list_product = get_product_by(data_provider["provider"])
             # Create Carousel Columns
             columns = []
-            for product in list_product:
+            for product in list_product[:9]:
                 carousel_column = CarouselColumn(thumbnail_image_url=product.image, title="{} {}".format(product.operator, product.nominal), actions=[
                     MessageAction(label="Rp. {}".format(product.price), text=product.nominal)
                 ])
