@@ -53,7 +53,7 @@ from chatbot import bot_reply
 # feature
 from feature import cek_provider
 # endpoint
-from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by
+from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user
 
 
 
