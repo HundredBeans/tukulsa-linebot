@@ -241,7 +241,7 @@ def handle_text_message(event):
                 product_code = "xld{}".format(nominal)
             else:
                 product_code = "h{}{}".format(operator, nominal)
-            midtrans_url = get_midtrans_url(user_id, nomor, product_code)
+            midtrans_url = get_midtrans_url(user_id, nomor, product_code)['link_payment']
             ######################################
             bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
             # GET Midtrans link via backend
