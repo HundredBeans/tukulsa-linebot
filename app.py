@@ -256,7 +256,7 @@ def handle_text_message(event):
             # Reset status #
         else:
             bot_message = "apanya yang yakin 100%?"
-            line_bot_api.reply_message(event.reply_token, TextSendMessage())
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
 
     elif text == "gajadi deh":
         bot_message = "Oh yaudah gapapa kak"
