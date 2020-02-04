@@ -5,6 +5,17 @@ from endpoint import get_chat_info, update_all, update_nominal, update_number
 
 
 def cek_provider(nomor):
+    """
+    Check the provider based on given Phone Number using its 4 first number
+
+    Parameters
+    ----------
+        nomor : Given 4 first Phone Number as a string.
+
+    Return 
+    ------
+        matched provider with the Phone Number, or False if the given Phone Number is invalid
+    """
     daftar_operator = [
         {
             "provider": "telkomsel",
@@ -32,7 +43,7 @@ def cek_provider(nomor):
             "nomor": ["0895", "0896", "0897", "0898", "0899"],
         },
         {
-            "provider": "smartfren",
+            "provider": "smart",
             "no_provider": 6,
             "nomor": ["0881", "0882", "0883", "0884", "0885", "0886", "0887", "0888", "0889"],
         }
@@ -43,6 +54,19 @@ def cek_provider(nomor):
     return False
 
 def response_flow(line_id, nomor, nominal):
+    """
+    Define the User's and Bot Flow when buying 'pulsa' (Inputing Phone Number and Nominal)
+
+    Parameters
+    ----------
+        line_id : User's LINE ID as a string.
+        nomor : User's Phone Number based on LINE Chat as a list.
+        nominal : User's selected nominal based on LINE Chat as a list.
+
+    Return
+    ------
+        appropriate response for specific condition as a string
+    """
     if len(nomor) == 1 and len(nominal) == 1:
         nomor_kode = nomor[0][:4]
         data_provider = cek_provider(nomor_kode)
@@ -61,7 +85,6 @@ def response_flow(line_id, nomor, nominal):
         nomor_kode = nomor[0][:4]
         data_provider = cek_provider(nomor_kode)
         ### Cek apakah user sudah ngasih info nominal ###
-        status = get_chat_info(line_id)
         if status['status_nominal'] and data_provider is not False:
             # Update nomor ke backend
             update = update_number(line_id, nomor[0], True, data_provider['provider'])
