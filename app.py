@@ -241,7 +241,7 @@ def handle_text_message(event):
                 product_code = "xld{}".format(nominal)
             else:
                 product_code = "h{}{}".format(operator, nominal)
-            midtrans_url = get_midtrans_url(user_id, nomor, nominal)
+            midtrans_url = get_midtrans_url(user_id, nomor, product_code)
             ######################################
             bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
             # GET Midtrans link via backend
@@ -263,7 +263,7 @@ def handle_text_message(event):
     elif text == "gajadi deh":
         bot_message = "Oh yaudah gapapa kak"
         # Tambahin cancel pembayaran midtrans #
-        
+
         # Reset status #
         reset = update_all(user_id, "", "", False, False, "")
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
