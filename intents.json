@@ -55,7 +55,7 @@
   },
   {
     "tag": "cek produk",
-    "patterns": ["ada pulsa apa saja?", "ada pulsa apa aja?", "telkomsel ada ngga?", "indosat ada ngga?"],
+    "patterns": ["ada pulsa apa saja?", "ada pulsa apa aja?", "jual pulsa apa aja ka?"],
     "responses": ["ada semua kak, lengkappp"],
     "context_set": ""
   },
