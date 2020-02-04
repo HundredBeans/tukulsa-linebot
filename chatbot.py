@@ -13,6 +13,23 @@ import json
 import os
 import pickle
 
+context_chat = {
+    "ping":"Kenape? Berisik amat",
+    "salam":"kumsalaam",
+    "halo":"haloo kak {}",
+    "beli pulsa":"oke kak, boleh minta nomor hapenya? Formatnya 08xxxxxxx ya",
+    "complaint":"Oke kak {}, saya akan bantu cek status pembeliannya dulu ya kak",
+    "terima kasih":"iya kak {}, sama-sama :)",
+    "cek riwayat":"Oke kak {}, berikut riwayat transaksinya ya kak",
+    "cek riwayat kemarin":"oke kak {}, berikut riwayat transaksi kemarinnya ya",
+    "cek riwayat bulan":"Riwayat transaksinya {} untuk bulan itu seperti ini ya kak",
+    "cek produk":"Ini list operatornya, bisa dipilih kalo mau cek dulu kak",
+    "cek produk spesifik":"Ini list pulsanya ya kak",
+    "keluar konteks":"Sori cuy, ane cuma jual pulsa. Kalo mau beli langsung chat aja, jangan aneh-aneh",
+    "tanya beneran":"aku Tukulsa, kerjaannya ya cuma nawarin pulsa sama jual pulsa. Jangan nanya doang, beli dong",
+    "low prob":"Maksudnya apa tuh kak?"
+}
+
 with open("intents.json") as file:
   data = json.load(file)
 
@@ -39,9 +56,9 @@ except:
 
   # Memecah tiap kata menjadi lebih kecil dan tidak redundant
   words = [stemmer.stem(w.lower()) for w in words if w != "?"]
-  words = sorted(list(set(words)))
+  words = list(set(words))
 
-  labels = sorted(labels)
+  labels = labels
 
   training = []
   output = []
@@ -110,12 +127,9 @@ def bot_reply(text):
   bot_answer = labels[response_index]
   # bot menjawab jika result > 0.6
   if result[0][response_index] > 0.6:
-    for classes in data['intents']:
-      if classes['tag'] == bot_answer:
-        responses = classes['responses']
-    return str(random.choices(responses)[0])
+    return bot_answer
   else:
-    return "Duh maaf, aku ngga ngerti"
+    return "low prob"
 
 
 def bot_action():
@@ -135,6 +149,10 @@ def bot_action():
           for tg in data['intents']:
               if tg['tag']==bot_answer:
                   responses=tg['responses']
-          print("Tukulsa:",str(random.choices(responses)[0]))
+          print(bot_answer)
+          print("Tukulsa:", context_chat[bot_answer])
         else:
           print("Tukulsa: Duh, aku kudu jawab piye? Ngga ngerti aku")
+
+if __name__ == "__main__":
+  bot_action()

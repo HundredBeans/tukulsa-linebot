@@ -49,11 +49,11 @@ from linebot.models import (
     SeparatorComponent, QuickReply, QuickReplyButton,
     ImageSendMessage)
 # chatbot
-from chatbot import bot_reply
+from chatbot import bot_reply, context_chat
 # feature
 from feature import cek_provider
 # endpoint
-from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user
+from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url
 
 
 
@@ -234,17 +234,19 @@ def handle_text_message(event):
             # POST Transaction ke Backend Tukulsa
             nomor = status['phone_number']
             nomor_kode = nomor[:4]
+            nominal = status['nominal']
             data_provider = cek_provider(nomor_kode)
             operator = data_provider["provider"]
             if operator == "xl":
-                product_code = "xld{}".format(status['nominal'])
+                product_code = "xld{}".format(nominal)
             else:
-                product_code = "h{}{}".format(operator, status['nominal'])
+                product_code = "h{}{}".format(operator, nominal)
+            midtrans_url = get_midtrans_url(user_id, nomor, nominal)
             ######################################
             bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
             # GET Midtrans link via backend
             buttons_template = ButtonsTemplate(text = bot_message, actions=[
-                URIAction(label='Bayar', uri='https://app.sandbox.midtrans.com/snap/v2/vtweb/0f39f420-50a7-4060-b5dd-9d5956b3c3a2'),
+                URIAction(label='Bayar', uri=midtrans_url),
                 MessageAction(label='Batal', text='gajadi deh')
             ])
             template_message = TemplateSendMessage(
@@ -265,7 +267,8 @@ def handle_text_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
     else:
         # chatbot
-        reply_message = bot_reply(text)
+        context = bot_reply(text)
+        reply_message = context_chat[context]
         # Tambahin display name ke dalam message
         formatted_message = reply_message.format(display_name)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=formatted_message))
