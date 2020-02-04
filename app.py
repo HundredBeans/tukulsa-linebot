@@ -178,14 +178,15 @@ def handle_text_message(event):
             # GET Produk filter by provider
             list_product = get_product_by(data_provider["provider"])
             # Create Carousel Columns
-            columns = []
+            product_columns = []
             for product in list_product[:9]:
                 carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), actions=[
                     MessageAction(label="Rp. {}".format(product['price']), text=product['nominal'])
                 ])
-                columns.append(carousel_column)
+                product_columns.append(carousel_column)
             # Create Carousel Template
-            carousel_template = CarouselTemplate(columns=columns)
+            print(product_columns)
+            carousel_template = CarouselTemplate(columns=product_columns)
             template_message = TemplateSendMessage(
                 alt_text='List Product', template=carousel_template)
             line_bot_api.reply_message(event.reply_token, template_message)
