@@ -182,3 +182,5 @@ def get_midtrans_url(line_id, number, product_code):
     data = requests.post(url, json=json_data, headers=headers).text
     parsed = json.loads(data)
     return parsed
+
+print(get_midtrans_url("Uc38d44c9d7f172a98011fca096171acd", "08159898344", "hindosat10000")['link_payment'])
