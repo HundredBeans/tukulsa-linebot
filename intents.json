@@ -61,13 +61,13 @@
   },
   {
     "tag": "keluar konteks",
-    "patterns": ["main yuk", "ngobrol yuk", "bagi duit", "nikah yuk", "ah ngga asik"],
+    "patterns": ["main yuk", "ngobrol yuk", "bagi duit", "nikah yuk", "ah ngga asik", "main kuy"],
     "responses": ["sori cuy, gue cuma jual pulsa. Kalo mau beli bisa langsung bilang, jangan aneh-aneh"],
     "context_set": ""
   },
   {
     "tag": "tanya beneran",
-    "patterns": ["ini apa?", "kamu siapa?", "kamu bisa apa?"],
+    "patterns": ["ini apa?", "kamu siapa?", "kamu bisa apa?", "ini bot apa ya"],
     "responses": ["aku Tukulsa, kerjaannya ya cuma nawarin pulsa sama jual pulsa. Jangan nanya doang, beli dong"],
     "context_set": ""
   }

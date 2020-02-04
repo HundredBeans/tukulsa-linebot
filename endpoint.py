@@ -156,3 +156,29 @@ def get_product_by(operator):
     data = requests.post(url, json = json_data, headers = headers).text
     parsed = json.loads(data)
     return parsed
+
+def get_midtrans_url(line_id, number, product_code):
+    """
+    GET midtrans url as a payment url from backend
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID to specifiy the order as string.
+        number : User's Phone Number as string.
+        product_code : Product or Pulsa that will be buy from User as string.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend as midtrans url
+    """
+    json_data = {
+        "line_id": line_id,
+        "phone_number": number,
+        "product_code": product_code,
+    }
+    url = base_url + "users/transaction"
+    headers = {'content-type' : 'application/json'}
+
+    data = requests.post(url, json=json_data, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
