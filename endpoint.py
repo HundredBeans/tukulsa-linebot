@@ -134,3 +134,25 @@ def update_all(line_id, number, nominal, number_status, nominal_status, operator
     data = requests.put(url, json = json_data, headers = headers).text
     parsed = json.loads(data)
     return parsed
+
+def get_product_by(operator):
+    """
+    GET Product with filter by specific provider / operator
+    
+    Parameters
+    ---------
+        operator : User's Selected operator / provider as string
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
+    json_data = {
+        'operator' : operator   
+    }
+    url = base_url + 'users/product/filterby'
+    headers = {'content-type' : 'application/json'}
+
+    data = requests.post(url, json = json_data, headers = headers).text
+    parsed = json.loads(data)
+    return parsed

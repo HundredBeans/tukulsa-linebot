@@ -51,9 +51,11 @@ from linebot.models import (
 # chatbot
 from chatbot import bot_reply
 # feature
-from feature import response_flow
+from feature import cek_provider
 # endpoint
-from endpoint import post_user, get_chat_info, update_all
+from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by
+
+
 
 
 app = Flask(__name__)
@@ -123,27 +125,119 @@ def handle_text_message(event):
     nominal_pattern = r"\d+\s?ribu|\d+.000"
     nomor = re.findall(nomor_pattern, text)
     nominal = re.findall(nominal_pattern, text)
-
-    if len(nomor) == 1 or len(nominal) == 1:
-        reply_message = response_flow(user_id, nomor, nominal)
-        status = get_chat_info(user_id)
-        if status["status_number"] and status["status_nominal"]:
-            buttons_template = ButtonsTemplate(text=reply_message, actions=[
+    ###### RESPONSE FLOW FOR BUYING PULSA (INPUT AND CONFIRMING) ######
+    if len(nomor) == 1 and len(nominal) == 1:
+        nomor_kode = nomor[0][:4]
+        data_provider = cek_provider(nomor_kode)
+        nominal = nominal[0].replace(" ", "").replace(
+            "ribu", '000').replace(".", "").replace(",", "")
+        if data_provider is not False:
+            # Update chat status
+            status = update_all(user_id, nomor[0], nominal, True, True, data_provider["provider"])
+            bot_message = "Yakin mau beli pulsa {} {} ke nomor {}?".format(
+                    data_provider["provider"], nominal, nomor[0])
+            # Create confirm template
+            confirm_template = ConfirmTemplate(text=bot_message, actions=[
                 MessageAction(label= 'Yakin', text='yakin 100%'),
-                MessageAction(label='Batal', text='gajadi deh')
+                MessageAction(label= 'Batal', text='gajadi deh')
             ])
             template_message = TemplateSendMessage(
-                alt_text='Konfirmasi Pembelian', template=buttons_template)
+                alt_text='Konfirmasi Pembelian', template=confirm_template)
             line_bot_api.reply_message(event.reply_token, template_message)
+
         else:
-            formatted_message = reply_message.format(display_name)
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=formatted_message))
+            bot_message = "Nomornya ngga valid tuh kak, coba dicek lagi"
+            template_message = TextSendMessage(text=bot_message)
+            line_bot_api.reply_message(event.reply_token, template_message)
+
+    elif len(nomor) == 1:
+        # Cek provider dari nomor tersebut
+        nomor_kode = nomor[0][:4]
+        data_provider = cek_provider(nomor_kode)
+        # GET Nominal status
+        status = get_chat_info(user_id)
+        ### Cek apakah user sudah ngasih info nominal ###
+        if status['status_nominal'] and data_provider is not False:
+            # Update nomor ke backend
+            update = update_number(line_id, nomor[0], True, data_provider['provider'])
+            bot_message = "Yakin mau beli pulsa {} {} ke nomor {}?".format(
+                data_provider["provider"], status['nominal'], nomor[0])
+            # Create confirm template
+            confirm_template = ConfirmTemplate(text=bot_message, actions=[
+                MessageAction(label= 'Yakin', text='yakin 100%'),
+                MessageAction(label= 'Batal', text='gajadi deh')
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='Konfirmasi Pembelian', template=confirm_template)
+            line_bot_api.reply_message(event.reply_token, template_message)
+        
+        elif data_provider is not False:
+            # Update nomor ke backend
+            update = update_number(line_id, nomor[0], True, data_provider['provider'])
+            bot_message = "Silahkan dipilih pulsa {}nya kak".format(data_provider["provider"])
+            # GET Produk filter by provider
+            list_product = get_product_by(data_provider["provider"])
+            # Create Carousel Columns
+            columns = []
+            for product in list_product:
+                carousel_column = CarouselColumn(thumbnail_image_url=product.image, title="{} {}".format(product.operator, product.nominal), actions=[
+                    MessageAction(label="Rp. {}".format(product.price), text=product.nominal)
+                ])
+                columns.append(carousel_column)
+            # Create Carousel Template
+            carousel_template = CarouselTemplate(columns=columns)
+            template_message = TemplateSendMessage(
+                alt_text='List Product', template=carousel_template)
+            line_bot_api.reply_message(event.reply_token, template_message)
+            # LIMIT MAX 10
+
+        else:
+            bot_message = "Nomornya ngga valid tuh kak, coba dicek lagi"
+            template_message = TextSendMessage(text=bot_message)
+            line_bot_api.reply_message(event.reply_token, template_message)
+    
+    elif len(nominal) == 1:
+        # Format nominal jadi angka doang
+        nominal = nominal[0].replace(" ", "").replace(
+            "ribu", '000').replace(".", "").replace(",", "")
+        # Update nominal ke backend
+        update = update_nominal(line_id, nominal, True)
+        if update['status_number']:
+            nomor_user = update['phone_number']
+            nomor_kode = nomor_user[:4]
+            data_provider = cek_provider(nomor_kode)
+            bot_message = "Yakin mau beli pulsa {} {} ke nomor {}?".format(
+                data_provider["provider"], nominal, nomor_user)
+            # Create confirm template
+            confirm_template = ConfirmTemplate(text=bot_message, actions=[
+                MessageAction(label= 'Yakin', text='yakin 100%'),
+                MessageAction(label= 'Batal', text='gajadi deh')
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='Konfirmasi Pembelian', template=confirm_template)
+            line_bot_api.reply_message(event.reply_token, template_message)
             
+        else:
+            bot_message = "Beli pulsa {} ke nomor apa ya kak?".format(nominal)
+            template_message = TextSendMessage(text=bot_message)
+            line_bot_api.reply_message(event.reply_token, template_message)
+
     elif text == "yakin 100%":
-    # Cek kalo user itu sudah ada data nomor dan nominal
+    # Check if user already send Phone Number and Nominal info
         status = get_chat_info(user_id)
         if status["status_number"] and status["status_nominal"]:
+            # POST Transaction ke Backend Tukulsa
+            nomor = status['phone_number']
+            nomor_kode = nomor[:4]
+            data_provider = cek_provider(nomor_kode)
+            operator = data_provider["provider"]
+            if operator = "xl":
+                product_code = "xld{}".format(status['nominal'])
+            else:
+                product_code = "h{}{}".format(operator, status['nominal'])
+            ######################################
             bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
+            # GET Midtrans link via backend
             buttons_template = ButtonsTemplate(text = bot_message, actions=[
                 URIAction(label='Bayar', uri='https://app.sandbox.midtrans.com/snap/v2/vtweb/0f39f420-50a7-4060-b5dd-9d5956b3c3a2'),
                 MessageAction(label='Batal', text='gajadi deh')

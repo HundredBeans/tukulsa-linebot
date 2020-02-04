@@ -43,7 +43,7 @@ def cek_provider(nomor):
             "nomor": ["0895", "0896", "0897", "0898", "0899"],
         },
         {
-            "provider": "smartfren",
+            "provider": "smart",
             "no_provider": 6,
             "nomor": ["0881", "0882", "0883", "0884", "0885", "0886", "0887", "0888", "0889"],
         }
