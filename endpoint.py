@@ -183,4 +183,48 @@ def get_midtrans_url(line_id, number, product_code):
     parsed = json.loads(data)
     return parsed
 
-print(get_midtrans_url("Uc38d44c9d7f172a98011fca096171acd", "08159898344", "hindosat10000")['link_payment'])
+def get_alltransactions_by(line_id):
+    """
+    GET All User's transactions
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID to specifiy the order as string.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
+    json_data = {
+        'line_id': line_id
+    }
+    url = base_url + 'users/transactions/filterby'
+    headers = {'content-type' : 'application/json'}
+
+    data = requests.post(url, json=json_data, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
+
+def get_latesttransaction_by(line_id):
+    """
+    GET Latest User's transactions
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID to specifiy the order as string.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
+    json_data = {
+        'line_id': line_id
+    }
+    url = base_url + 'users/transactions/newest'
+    headers = {'content-type' : 'application/json'}
+
+    data = requests.post(url, json=json_data, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
+
+print(get_latesttransaction_by("Uc38d44c9d7f172a98011fca096171acd"))
