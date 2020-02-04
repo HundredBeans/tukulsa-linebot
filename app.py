@@ -426,7 +426,13 @@ def handle_text_message(event):
             reply_message = context_chat[context].format(display_name)
             # Get Transaction from Backend
             latest_transaction = get_latesttransaction_by(user_id)
-            text_latest_trx = "Riwayat Transaksi pada {} berupa pulsa {} dengan harga Rp.{} ke nomor {}. Status pembayaran: {} dan status pemesanan (pulsa) : {}".format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
+            text_latest_trx = '''
+            Riwayat Transaksi ({}) : 
+            Pulsa : {} 
+            Harga : Rp.{} 
+            Nomor : {} 
+            Status pembayaran: {} 
+            Status pemesanan (pulsa) : {}'''.format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
             line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=reply_message), TextSendMessage(text=text_latest_trx)])
         else:
             reply_message = context_chat[context]
