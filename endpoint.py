@@ -4,6 +4,18 @@ import json
 base_url = 'https://tukulsa-new-test.herokuapp.com/'
 
 def post_user(line_id, display_name):
+    """
+    Post User's LINE info into TUKULSA database
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID as a string.
+        display_name : User's LINE Display Name as a string.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
     json_data = {
         'line_id': line_id,
         'display_name': display_name
@@ -16,6 +28,17 @@ def post_user(line_id, display_name):
     return parsed
 
 def get_chat_info(line_id):
+    """
+    GET User's LINE Chat info from TUKULSA Database
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID as a string.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
     json_data = {
         'line_id': line_id
     }
@@ -27,6 +50,20 @@ def get_chat_info(line_id):
     return parsed
 
 def update_number(line_id, number, number_status, operator):
+    """
+    UPDATE User's LINE Chat info into TUKULSA backend / database
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID as a string.
+        number : User's Phone Number based on LINE Chat as a string.
+        number_status : User's Phone Number Status based on LINE Chat as a boolean.
+        operator : User's provider based on Phone Number as a string.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
     json_data = {
         'line_id': line_id,
         'phone_number': number,
@@ -41,6 +78,19 @@ def update_number(line_id, number, number_status, operator):
     return parsed
 
 def update_nominal(line_id, nominal, nominal_status):
+    """
+    UPDATE User's LINE Chat info into TUKULSA backend / database
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID as a string.
+        nominal : User's asked nominal based on LINE Chat as a string.
+        nominal_status : User's asked nominal status based on LINE Chat as a boolean.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
     json_data = {
         'line_id': line_id,
         'nominal': nominal,
@@ -54,6 +104,22 @@ def update_nominal(line_id, nominal, nominal_status):
     return parsed
 
 def update_all(line_id, number, nominal, number_status, nominal_status, operator):
+    """
+    UPDATE User's LINE Chat info into TUKULSA backend / database
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID as a string.
+        number : User's Phone Number based on LINE Chat as a string.
+        nominal : User's asked nominal based on LINE Chat as a string.
+        number_status : User's Phone Number Status based on LINE Chat as a boolean.
+        nominal_status : User's asked nominal status based on LINE Chat as a boolean.
+        operator : User's provider based on Phone Number as a string
+
+    Return
+    ------
+        parsed response from TUKULSA Backend
+    """
     json_data = {
         'line_id': line_id,
         'phone_number': number,
