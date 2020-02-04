@@ -159,7 +159,7 @@ def handle_text_message(event):
         ### Cek apakah user sudah ngasih info nominal ###
         if status['status_nominal'] and data_provider is not False:
             # Update nomor ke backend
-            update = update_number(line_id, nomor[0], True, data_provider['provider'])
+            update = update_number(user_id, nomor[0], True, data_provider['provider'])
             bot_message = "Yakin mau beli pulsa {} {} ke nomor {}?".format(
                 data_provider["provider"], status['nominal'], nomor[0])
             # Create confirm template
@@ -173,7 +173,7 @@ def handle_text_message(event):
         
         elif data_provider is not False:
             # Update nomor ke backend
-            update = update_number(line_id, nomor[0], True, data_provider['provider'])
+            update = update_number(user_id, nomor[0], True, data_provider['provider'])
             bot_message = "Silahkan dipilih pulsa {}nya kak".format(data_provider["provider"])
             # GET Produk filter by provider
             list_product = get_product_by(data_provider["provider"])
@@ -201,7 +201,7 @@ def handle_text_message(event):
         nominal = nominal[0].replace(" ", "").replace(
             "ribu", '000').replace(".", "").replace(",", "")
         # Update nominal ke backend
-        update = update_nominal(line_id, nominal, True)
+        update = update_nominal(user_id, nominal, True)
         if update['status_number']:
             nomor_user = update['phone_number']
             nomor_kode = nomor_user[:4]
