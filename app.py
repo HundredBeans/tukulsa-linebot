@@ -262,6 +262,8 @@ def handle_text_message(event):
 
     elif text == "gajadi deh":
         bot_message = "Oh yaudah gapapa kak"
+        # Tambahin cancel pembayaran midtrans #
+        
         # Reset status #
         reset = update_all(user_id, "", "", False, False, "")
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
