@@ -122,7 +122,7 @@ def handle_text_message(event):
     add_user = post_user(user_id, display_name)
     # Pattern nomor dan nominal pulsa
     nomor_pattern = r"08\d{9,11}"
-    nominal_pattern = r"\d+\s?ribu|\d+.000"
+    nominal_pattern = r"\d+\s?ribu|\d+.?000"
     nomor = re.findall(nomor_pattern, text)
     nominal = re.findall(nominal_pattern, text)
     ###### RESPONSE FLOW FOR BUYING PULSA (INPUT AND CONFIRMING) ######
@@ -181,7 +181,7 @@ def handle_text_message(event):
             product_columns = []
             for product in list_product[:9]:
                 carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
-                    MessageAction(label="Rp. {}".format(product['price']), text=product['nominal'])
+                    MessageAction(label="Rp. {}".format(product['nominal']), text=product['nominal'])
                 ])
                 product_columns.append(carousel_column)
             # Create Carousel Template
