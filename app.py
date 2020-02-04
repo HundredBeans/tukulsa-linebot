@@ -231,7 +231,7 @@ def handle_text_message(event):
             nomor_kode = nomor[:4]
             data_provider = cek_provider(nomor_kode)
             operator = data_provider["provider"]
-            if operator = "xl":
+            if operator == "xl":
                 product_code = "xld{}".format(status['nominal'])
             else:
                 product_code = "h{}{}".format(operator, status['nominal'])
