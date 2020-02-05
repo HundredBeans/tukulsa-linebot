@@ -974,8 +974,7 @@ def handle_postback(event):
             midtrans_url = get_midtrans_url(user_id, nomor, product_code)['link_payment']
             ######################################
             bot_message_1 = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
-            message_1 = TextSendMessage(text=bot_message_1)
-            buttons_template = ButtonsTemplate(text = bot_message, actions=[
+            buttons_template = ButtonsTemplate(text = bot_message_1, actions=[
                 URIAction(label='Bayar', uri=midtrans_url),
                 PostbackAction(label="Cek Status", data="cek status")
             ])
@@ -984,7 +983,7 @@ def handle_postback(event):
             bot_message_2 = "Untuk cek status transaksi, bisa chat 'cek status pembelian' kapan aja atau bisa klik tombol cek status di atas"
             message_2 = TextSendMessage(text=message_2)
             reset = update_all(user_id, "", "", False, False, "")
-            line_bot_api.reply_message(event.reply_token, [message_1, template_message, message_2])
+            line_bot_api.reply_message(event.reply_token, [template_message, message_2])
         elif status['status_number']:
             bot_message = "kamu belum ngasih tau nominal pulsanya"
             line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
