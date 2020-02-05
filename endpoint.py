@@ -226,5 +226,3 @@ def get_latesttransaction_by(line_id):
     data = requests.post(url, json=json_data, headers=headers).text
     parsed = json.loads(data)
     return parsed
-
-print(get_latesttransaction_by("Uc38d44c9d7f172a98011fca096171acd"))
