@@ -159,4 +159,7 @@ dmypy.json
 # Pyre type checker
 
 # End of https://www.gitignore.io/api/flask,python
+<<<<<<< HEAD
 
+=======
+>>>>>>> c94add08e5f85ea2e1ee7ca9c4cdb77991d7f2fa
