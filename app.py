@@ -138,8 +138,8 @@ def handle_text_message(event):
                     data_provider["provider"], nominal, nomor[0])
             # Create confirm template
             confirm_template = ConfirmTemplate(text=bot_message, actions=[
-                MessageAction(label= 'Yakin', text='yakin 100%'),
-                MessageAction(label= 'Batal', text='gajadi deh')
+                PostbackAction(label= 'Yakin', data='yakin'),
+                PostbackAction(label= 'Batal', data='gajadi')
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembelian', template=confirm_template)
@@ -164,8 +164,8 @@ def handle_text_message(event):
                 data_provider["provider"], status['nominal'], nomor[0])
             # Create confirm template
             confirm_template = ConfirmTemplate(text=bot_message, actions=[
-                MessageAction(label= 'Yakin', text='yakin 100%'),
-                MessageAction(label= 'Batal', text='gajadi deh')
+                PostbackAction(label= 'Yakin', data='yakin'),
+                PostbackAction(label= 'Batal', data='gajadi')
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembelian', template=confirm_template)
@@ -190,7 +190,7 @@ def handle_text_message(event):
                 product_columns.append(carousel_column)
             # Create Carousel Template
             print(product_columns)
-            carousel_template = CarouselTemplate(columns=product_columns)
+            carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
             template_message = TemplateSendMessage(
                 alt_text='List Product', template=carousel_template)
             line_bot_api.reply_message(event.reply_token, template_message)
@@ -215,8 +215,8 @@ def handle_text_message(event):
                 data_provider["provider"], nominal, nomor_user)
             # Create confirm template
             confirm_template = ConfirmTemplate(text=bot_message, actions=[
-                MessageAction(label= 'Yakin', text='yakin 100%'),
-                MessageAction(label= 'Batal', text='gajadi deh')
+                PostbackAction(label= 'Yakin', data='yakin'),
+                PostbackAction(label= 'Batal', data='gajadi')
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembelian', template=confirm_template)
@@ -227,44 +227,6 @@ def handle_text_message(event):
             template_message = TextSendMessage(text=bot_message)
             line_bot_api.reply_message(event.reply_token, template_message)
 
-    elif text == "yakin 100%":
-    # Check if user already send Phone Number and Nominal info
-        status = get_chat_info(user_id)
-        if status["status_number"] and status["status_nominal"]:
-            # POST Transaction ke Backend Tukulsa
-            nomor = status['phone_number']
-            nomor_kode = nomor[:4]
-            nominal = status['nominal']
-            data_provider = cek_provider(nomor_kode)
-            operator = data_provider["provider"]
-            if operator == "xl":
-                product_code = "xld{}".format(nominal)
-            else:
-                product_code = "h{}{}".format(operator, nominal)
-            midtrans_url = get_midtrans_url(user_id, nomor, product_code)['link_payment']
-            ######################################
-            bot_message = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
-            # GET Midtrans link via backend
-            buttons_template = ButtonsTemplate(text = bot_message, actions=[
-                URIAction(label='Bayar', uri=midtrans_url),
-                MessageAction(label='Batal', text='gajadi deh')
-            ])
-            template_message = TemplateSendMessage(
-                alt_text='Konfirmasi Pembayaran', template=buttons_template)
-            reset = update_all(user_id, "", "", False, False, "")
-            line_bot_api.reply_message(event.reply_token, template_message)
-
-            # Nembak requests ke mobile pulsa #
-            # Reset status #
-        else:
-            bot_message = "apanya yang yakin 100%?"
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
-
-    elif text == "gajadi deh":
-        bot_message = "Oh yaudah gapapa kak"
-        # Reset status #
-        reset = update_all(user_id, "", "", False, False, "")
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
     # List Product by operator #    
     elif text == "telkomsel":
         bot_message = "Berikut pulsa {}nya kak".format('telkomsel')
@@ -283,7 +245,7 @@ def handle_text_message(event):
             ])
             product_columns.append(carousel_column)
         # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns)
+        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
         template_message = TemplateSendMessage(
             alt_text='List Product', template=carousel_template)
         line_bot_api.reply_message(event.reply_token, [message, template_message])
@@ -305,7 +267,7 @@ def handle_text_message(event):
             ])
             product_columns.append(carousel_column)
         # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns)
+        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
         template_message = TemplateSendMessage(
             alt_text='List Product', template=carousel_template)
         line_bot_api.reply_message(event.reply_token, [message, template_message])
@@ -327,7 +289,7 @@ def handle_text_message(event):
             ])
             product_columns.append(carousel_column)
         # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns)
+        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
         template_message = TemplateSendMessage(
             alt_text='List Product', template=carousel_template)
         line_bot_api.reply_message(event.reply_token, [message, template_message])
@@ -349,7 +311,7 @@ def handle_text_message(event):
             ])
             product_columns.append(carousel_column)
         # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns)
+        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
         template_message = TemplateSendMessage(
             alt_text='List Product', template=carousel_template)
         line_bot_api.reply_message(event.reply_token, [message, template_message])
@@ -371,7 +333,7 @@ def handle_text_message(event):
             ])
             product_columns.append(carousel_column)
         # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns)
+        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
         template_message = TemplateSendMessage(
             alt_text='List Product', template=carousel_template)
         line_bot_api.reply_message(event.reply_token, [message, template_message])
@@ -393,7 +355,7 @@ def handle_text_message(event):
             ])
             product_columns.append(carousel_column)
         # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns)
+        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
         template_message = TemplateSendMessage(
             alt_text='List Product', template=carousel_template)
         line_bot_api.reply_message(event.reply_token, [message, template_message])
@@ -408,26 +370,57 @@ def handle_text_message(event):
             line_bot_api.reply_message(event.reply_token, message)
         elif context == "cek produk":
             reply_message = context_chat[context]
-            message = TextSendMessage(text=reply_message)
+            # Bikin quick reply daftar operator
+            quick_reply_msg = TextSendMessage(
+            text=reply_message,
+            quick_reply=QuickReply(
+                items=[
+                    QuickReplyButton(
+                        action=MessageAction(label="Telkomsel", text="telkomsel"),
+                        image_url='https://developer.mobilepulsa.net/assets/images/products/telkomsel.png'
+                    ),
+                    QuickReplyButton(
+                        action=MessageAction(label="Indosat", text="indosat"),
+                        image_url='https://developer.mobilepulsa.net/assets/images/products/indosat.png'
+                    ),
+                    QuickReplyButton(
+                        action=MessageAction(label="XL", text="xl"),
+                        image_url='https://developer.mobilepulsa.net/assets/images/products/xl.png'
+                    ),
+                    QuickReplyButton(
+                        action=MessageAction(label="3 (Three)", text="three"),
+                        image_url='https://developer.mobilepulsa.net/assets/images/products/three.png'
+                    ),
+                    QuickReplyButton(
+                        action=MessageAction(label="Axis", text="axis"),
+                        image_url='https://developer.mobilepulsa.net/assets/images/products/axis.png'
+                    ),
+                    QuickReplyButton(
+                        action=MessageAction(label="Smartfren", text="smartfren"),
+                        image_url='https://developer.mobilepulsa.net/assets/images/products/smartfren.png'
+                    ),
+                ]))
+            line_bot_api.reply_message(event.reply_token, quick_reply_msg)
+            
             # Bikin carousel daftar operator
-            image_carousel_template = ImageCarouselTemplate(columns=[
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/telkomsel.png', action=MessageAction(label='Telkomsel', text='telkomsel')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/indosat.png', action=MessageAction(label='Indosat', text='indosat')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/xl.png', action=MessageAction(label='XL', text='xl')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/three.png', action=MessageAction(label='3 (Three)', text='three')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/axis.png', action=MessageAction(label='Axis', text='axis')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/smartfren.png', action=MessageAction(label='Smartfren', text='smartfren'))
-            ])
-            template_message = TemplateSendMessage(
-                alt_text="List Product", template=image_carousel_template
-            )
-            line_bot_api.reply_message(event.reply_token, [message, template_message])
+            # message = TextSendMessage(text=reply_message)
+            # image_carousel_template = ImageCarouselTemplate(columns=[
+            #     ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/telkomsel.png', action=MessageAction(label='Telkomsel', text='telkomsel')),
+            #     ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/indosat.png', action=MessageAction(label='Indosat', text='indosat')),
+            #     ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/xl.png', action=MessageAction(label='XL', text='xl')),
+            #     ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/three.png', action=MessageAction(label='3 (Three)', text='three')),
+            #     ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/axis.png', action=MessageAction(label='Axis', text='axis')),
+            #     ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/smartfren.png', action=MessageAction(label='Smartfren', text='smartfren'))
+            # ], image_size="contain")
+            # template_message = TemplateSendMessage(
+            #     alt_text="List Product", template=image_carousel_template
+            # )
+            # line_bot_api.reply_message(event.reply_token, [message, template_message])
         elif context == "cek riwayat":
             reply_message = context_chat[context].format(display_name)
             # Get Transaction from Backend
             latest_transaction = get_latesttransaction_by(user_id)
-            text_latest_trx = '''
-            Riwayat Transaksi ({}) : 
+            text_latest_trx = '''Riwayat Transaksi ({}) : 
             Pulsa : {} 
             Harga : Rp.{} 
             Nomor : {} 
@@ -986,6 +979,9 @@ def handle_leave():
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
+    user_id = event.source.user_id
+    profile = line_bot_api.get_profile(user_id)
+    display_name = profile.display_name
     if event.postback.data == 'ping':
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text='pong'))
@@ -995,7 +991,58 @@ def handle_postback(event):
     elif event.postback.data == 'date_postback':
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text=event.postback.params['date']))
+    elif event.postback.data == "yakin":
+    # Check if user already send Phone Number and Nominal info
+        status = get_chat_info(user_id)
+        if status["status_number"] and status["status_nominal"]:
+            # POST Transaction ke Backend Tukulsa #
+            nomor = status['phone_number']
+            nomor_kode = nomor[:4]
+            nominal = status['nominal']
+            data_provider = cek_provider(nomor_kode)
+            operator = data_provider["provider"]
+            if operator == "xl":
+                product_code = "xld{}".format(nominal)
+            else:
+                product_code = "h{}{}".format(operator, nominal)
+            midtrans_url = get_midtrans_url(user_id, nomor, product_code)['link_payment']
+            ######################################
+            bot_message_1 = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
+            buttons_template = ButtonsTemplate(text = bot_message_1, actions=[
+                URIAction(label='Bayar', uri=midtrans_url),
+                PostbackAction(label="Cek Status", data="cek status")
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='Konfirmasi Pembayaran', template=buttons_template)
+            bot_message_2 = "Untuk cek status transaksi, bisa chat 'cek status pembelian' kapan aja atau bisa klik tombol cek status di atas"
+            message_2 = TextSendMessage(text=bot_message_2)
+            reset = update_all(user_id, "", "", False, False, "")
+            line_bot_api.reply_message(event.reply_token, [template_message, message_2])
+        elif status['status_number']:
+            bot_message = "kamu belum ngasih tau nominal pulsanya"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
+        elif status['status_nominal']:
+            bot_message = "kamu belum ngasih tau nomor hp yang dituju"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
+        else:
+            bot_message = "kamu belum ngasih tau nomor sama nominal pulsa yang mau dibeli"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
+    elif event.postback.data == "gajadi":
+        status = get_chat_info(user_id)
+        if status['status_number'] and status['status_nominal']:
+            bot_message = "Pembelian pulsa {} {} ke {} dibatalkan ya ka".format(status['operator'], status['nominal'], status['phone_number'])
+            # Reset status #
+            reset = update_all(user_id, "", "", False, False, "")
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
+        else:
+            bot_message = "Batal apa ya ka? Kak {}, sedang tidak dalam proses transaksi. Biar yakin, bisa dicek status transaksi dengan chat 'cek status transaksi' kapan aja".format(display_name)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
 
+    elif event.postback.data == "cek status":
+        reply_message = "Berikut adalah status transaksi yang terbaru ya kak"
+        latest_transaction = get_latesttransaction_by(user_id)
+        text_latest_trx = '''Status Transaksi ({}) : \nPulsa : {} \nHarga : Rp.{} \nNomor : {} \nStatus pembayaran: {} \nStatus pemesanan (pulsa) : {}'''.format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
+        line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=reply_message), TextSendMessage(text=text_latest_trx)])
 
 @handler.add(BeaconEvent)
 def handle_beacon(event):
