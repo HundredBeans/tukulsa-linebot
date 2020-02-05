@@ -138,8 +138,8 @@ def handle_text_message(event):
                     data_provider["provider"], nominal, nomor[0])
             # Create confirm template
             confirm_template = ConfirmTemplate(text=bot_message, actions=[
-                PostbackAction(label= 'Yakin', data='yakin'),
-                PostbackAction(label= 'Batal', data='gajadi')
+                MessageAction(label= 'Yakin', text='yakin'),
+                MessageAction(label= 'Batal', text='gajadi')
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembelian', template=confirm_template)
@@ -164,8 +164,8 @@ def handle_text_message(event):
                 data_provider["provider"], status['nominal'], nomor[0])
             # Create confirm template
             confirm_template = ConfirmTemplate(text=bot_message, actions=[
-                PostbackAction(label= 'Yakin', data='yakin'),
-                PostbackAction(label= 'Batal', data='gajadi')
+                MessageAction(label= 'Yakin', text='yakin'),
+                MessageAction(label= 'Batal', text='gajadi')
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembelian', template=confirm_template)
@@ -180,11 +180,15 @@ def handle_text_message(event):
             # Create Carousel Columns
             product_columns = []
             for product in list_product[:9]:
+                price = '{:,}'.format(product['price'])
+                price = price.replace(',', '.')
                 if len(product['nominal']) > 8:
-                    show = "Rp.{}".format(product['price'])
+                    show = "Rp {}".format(price)
                 else:
-                    show = "Pulsa {}".format(product['nominal'])
-                carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                    nominal = '{:,}'.format(product['nominal'])
+                    nominal = nominal.replace(',', '.')
+                    show = "Pulsa {}".format(nominal)
+                carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
                     MessageAction(label=show, text=product['nominal'])
                 ])
                 product_columns.append(carousel_column)
@@ -215,8 +219,8 @@ def handle_text_message(event):
                 data_provider["provider"], nominal, nomor_user)
             # Create confirm template
             confirm_template = ConfirmTemplate(text=bot_message, actions=[
-                PostbackAction(label= 'Yakin', data='yakin'),
-                PostbackAction(label= 'Batal', data='gajadi')
+                MessageAction(label= 'Yakin', text='yakin'),
+                MessageAction(label= 'Batal', text='gajadi')
             ])
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembelian', template=confirm_template)
@@ -236,11 +240,15 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
+            price = '{:,}'.format(product['price'])
+            price = price.replace(',', '.')
             if len(product['nominal']) > 8:
-                show = "Rp.{}".format(product['price'])
+                show = "Rp {}".format(price)
             else:
-                show = "Pulsa {}".format(product['nominal'])
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                nominal = '{:,}'.format(product['nominal'])
+                nominal = nominal.replace(',', '.')
+                show = "Pulsa {}".format(nominal)
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
                 MessageAction(label=show, text=product['nominal'])
             ])
             product_columns.append(carousel_column)
@@ -258,11 +266,15 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
+            price = '{:,}'.format(product['price'])
+            price = price.replace(',', '.')
             if len(product['nominal']) > 8:
-                show = "Rp.{}".format(product['price'])
+                show = "Rp {}".format(price)
             else:
-                show = "Pulsa {}".format(product['nominal'])
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                nominal = '{:,}'.format(product['nominal'])
+                nominal = nominal.replace(',', '.')
+                show = "Pulsa {}".format(nominal)
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
                 MessageAction(label=show, text=product['nominal'])
             ])
             product_columns.append(carousel_column)
@@ -280,11 +292,15 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
+            price = '{:,}'.format(product['price'])
+            price = price.replace(',', '.')
             if len(product['nominal']) > 8:
-                show = "Rp.{}".format(product['price'])
+                show = "Rp {}".format(price)
             else:
-                show = "Pulsa {}".format(product['nominal'])
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                nominal = '{:,}'.format(product['nominal'])
+                nominal = nominal.replace(',', '.')
+                show = "Pulsa {}".format(nominal)
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
                 MessageAction(label=show, text=product['nominal'])
             ])
             product_columns.append(carousel_column)
@@ -302,11 +318,15 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
+            price = '{:,}'.format(product['price'])
+            price = price.replace(',', '.')
             if len(product['nominal']) > 8:
-                show = "Rp.{}".format(product['price'])
+                show = "Rp {}".format(price)
             else:
-                show = "Pulsa {}".format(product['nominal'])
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                nominal = '{:,}'.format(product['nominal'])
+                nominal = nominal.replace(',', '.')
+                show = "Pulsa {}".format(nominal)
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
                 MessageAction(label=show, text=product['nominal'])
             ])
             product_columns.append(carousel_column)
@@ -324,11 +344,15 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
+            price = '{:,}'.format(product['price'])
+            price = price.replace(',', '.')
             if len(product['nominal']) > 8:
-                show = "Rp.{}".format(product['price'])
+                show = "Rp {}".format(price)
             else:
-                show = "Pulsa {}".format(product['nominal'])
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                nominal = '{:,}'.format(product['nominal'])
+                nominal = nominal.replace(',', '.')
+                show = "Pulsa {}".format(nominal)
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
                 MessageAction(label=show, text=product['nominal'])
             ])
             product_columns.append(carousel_column)
@@ -346,11 +370,15 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
+            price = '{:,}'.format(product['price'])
+            price = price.replace(',', '.')
             if len(product['nominal']) > 8:
-                show = "Rp.{}".format(product['price'])
+                show = "Rp {}".format(price)
             else:
-                show = "Pulsa {}".format(product['nominal'])
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp.{}".format(product['price']), actions=[
+                nominal = '{:,}'.format(product['nominal'])
+                nominal = nominal.replace(',', '.')
+                show = "Pulsa {}".format(nominal)
+            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
                 MessageAction(label=show, text=product['nominal'])
             ])
             product_columns.append(carousel_column)
@@ -360,6 +388,52 @@ def handle_text_message(event):
             alt_text='List Product', template=carousel_template)
         line_bot_api.reply_message(event.reply_token, [message, template_message])
 
+    elif text == "yakin":
+    # Check if user already send Phone Number and Nominal info
+        status = get_chat_info(user_id)
+        if status["status_number"] and status["status_nominal"]:
+            # POST Transaction ke Backend Tukulsa #
+            nomor = status['phone_number']
+            nomor_kode = nomor[:4]
+            nominal = status['nominal']
+            data_provider = cek_provider(nomor_kode)
+            operator = data_provider["provider"]
+            if operator == "xl":
+                product_code = "xld{}".format(nominal)
+            else:
+                product_code = "h{}{}".format(operator, nominal)
+            midtrans_url = get_midtrans_url(user_id, nomor, product_code)['link_payment']
+            ######################################
+            bot_message_1 = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
+            buttons_template = ButtonsTemplate(text = bot_message_1, actions=[
+                URIAction(label='Bayar', uri=midtrans_url),
+                MessageAction(label="Cek Status", text="cek status pembelian")
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='Konfirmasi Pembayaran', template=buttons_template)
+            bot_message_2 = "Untuk cek status transaksi, bisa chat 'cek status pembelian' kapan aja atau bisa klik tombol cek status di bawah"
+            message_2 = TextSendMessage(text=bot_message_2)
+            reset = update_all(user_id, "", "", False, False, "")
+            line_bot_api.reply_message(event.reply_token, [message_2, template_message])
+        elif status['status_number']:
+            bot_message = "kamu belum ngasih tau nominal pulsanya"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
+        elif status['status_nominal']:
+            bot_message = "kamu belum ngasih tau nomor hp yang dituju"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
+        else:
+            bot_message = "kamu belum ngasih tau nomor sama nominal pulsa yang mau dibeli"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
+    elif text == "gajadi":
+        status = get_chat_info(user_id)
+        if status['status_number'] and status['status_nominal']:
+            bot_message = "Pembelian pulsa {} {} ke {} dibatalkan ya ka".format(status['operator'], status['nominal'], status['phone_number'])
+            # Reset status #
+            reset = update_all(user_id, "", "", False, False, "")
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
+        else:
+            bot_message = "Batal apa ya ka? \nKak {}, sedang tidak dalam proses transaksi. \nBiar yakin, bisa dicek status transaksi dengan chat 'cek status transaksi' kapan aja".format(display_name)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
     else:
         # chatbot
         context = bot_reply(text)
@@ -370,38 +444,6 @@ def handle_text_message(event):
             line_bot_api.reply_message(event.reply_token, message)
         elif context == "cek produk":
             reply_message = context_chat[context]
-            # Bikin quick reply daftar operator
-            # quick_reply_msg = TextSendMessage(
-            # text=reply_message,
-            # quick_reply=QuickReply(
-            #     items=[
-            #         QuickReplyButton(
-            #             action=MessageAction(label="Telkomsel", text="telkomsel"),
-            #             image_url='https://developer.mobilepulsa.net/assets/images/products/telkomsel.png'
-            #         ),
-            #         QuickReplyButton(
-            #             action=MessageAction(label="Indosat", text="indosat"),
-            #             image_url='https://developer.mobilepulsa.net/assets/images/products/indosat.png'
-            #         ),
-            #         QuickReplyButton(
-            #             action=MessageAction(label="XL", text="xl"),
-            #             image_url='https://developer.mobilepulsa.net/assets/images/products/xl.png'
-            #         ),
-            #         QuickReplyButton(
-            #             action=MessageAction(label="3 (Three)", text="three"),
-            #             image_url='https://developer.mobilepulsa.net/assets/images/products/three.png'
-            #         ),
-            #         QuickReplyButton(
-            #             action=MessageAction(label="Axis", text="axis"),
-            #             image_url='https://developer.mobilepulsa.net/assets/images/products/axis.png'
-            #         ),
-            #         QuickReplyButton(
-            #             action=MessageAction(label="Smartfren", text="smartfren"),
-            #             image_url='https://developer.mobilepulsa.net/assets/images/products/smartfren.png'
-            #         ),
-            #     ]))
-            # line_bot_api.reply_message(event.reply_token, quick_reply_msg)
-            
             # Bikin carousel daftar operator
             message = TextSendMessage(text=reply_message)
             image_carousel_template = ImageCarouselTemplate(columns=[
@@ -420,8 +462,460 @@ def handle_text_message(event):
             reply_message = context_chat[context].format(display_name)
             # Get Transaction from Backend
             latest_transaction = get_latesttransaction_by(user_id)
-            text_latest_trx = '''Riwayat Transaksi ({}) : \nPulsa : {} \nHarga : Rp.{} \nNomor : {} \nStatus pembayaran: {} \nStatus pemesanan (pulsa) : {}'''.format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
-            line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=reply_message), TextSendMessage(text=text_latest_trx)])
+            price = '{:,}'.format(latest_transaction['price'])
+            price = price.replace(',', '.')
+            nominal = '{:,}'.format(latest_transaction['nominal'])
+            nominal = nominal.replace(',', '.')
+            # Make Flex Message
+            if latest_transaction['payment_status'] == 'PAID' and latest_transaction['order_status'] == 'SUCCESS':
+                bubble_string = """
+                {
+                "type": "bubble",
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                    {
+                        "type": "text",
+                        "size": "xs",
+                        "color": "#aaaaaa",
+                        "wrap": true,
+                        "margin": "none",
+                        "text": "{}"
+                    },
+                    {
+                        "type": "text",
+                        "text": "Detail Transaksi",
+                        "weight": "bold",
+                        "color": "#0b5b67",
+                        "size": "sm"
+                    },
+                    {
+                        "type": "text",
+                        "text": "{}",
+                        "weight": "bold",
+                        "size": "xl",
+                        "margin": "md",
+                        "wrap": true,
+                        "align": "center"
+                    },
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "margin": "xs",
+                        "spacing": "sm",
+                        "contents": [
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "xs",
+                                "align": "center",
+                                "color": "#aaaaaa"
+                            }
+                            ],
+                            "margin": "none"
+                        },
+                        {
+                            "type": "separator",
+                            "margin": "md"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Status",
+                                "size": "sm",
+                                "color": "#0b5b67",
+                                "flex": 0,
+                                "weight": "bold"
+                            }
+                            ],
+                            "margin": "xl"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Pembayaran",
+                                "size": "sm",
+                                "color": "#555555",
+                                "flex": 0
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Pemesanan (Pulsa)",
+                                "size": "sm",
+                                "color": "#555555",
+                                "flex": 0
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "separator",
+                            "margin": "xxl"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "margin": "xxl",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Operator",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Nominal",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Nomor Tujuan",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Harga",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Rp {}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        }
+                        ]
+                    },
+                    {
+                        "type": "separator",
+                        "margin": "xxl"
+                    },
+                    {
+                        "type": "button",
+                        "action": {
+                        "type": "message",
+                        "label": "Beli Lagi",
+                        "text": "{} {}"
+                        },
+                        "style": "primary",
+                        "margin": "lg",
+                        "color": "#0b5b67"
+                    }
+                    ]
+                },
+                "styles": {
+                    "footer": {
+                    "separator": true
+                    }
+                }
+                }
+                """.format(display_name, latest_transaction['order_id'], latest_transaction['created_at'], latest_transaction['payment_status'], latest_transaction['order_status'], latest_transaction['operator'], nominal, latest_transaction['phone_number'], price, latest_transaction['phone_number'], latest_transaction['nominal'])
+                message = FlexSendMessage(
+                    alt_text="Detail Transaksi", contents=json.loads(bubble_string))
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    message
+                )
+            else:
+                bubble_string = """
+                {
+                "type": "bubble",
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                    {
+                        "type": "text",
+                        "size": "xs",
+                        "color": "#aaaaaa",
+                        "wrap": true,
+                        "margin": "none",
+                        "text": "{}"
+                    },
+                    {
+                        "type": "text",
+                        "text": "Detail Transaksi",
+                        "weight": "bold",
+                        "color": "#0b5b67",
+                        "size": "sm"
+                    },
+                    {
+                        "type": "text",
+                        "text": "{}",
+                        "weight": "bold",
+                        "size": "xl",
+                        "margin": "md",
+                        "wrap": true,
+                        "align": "center"
+                    },
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "margin": "xs",
+                        "spacing": "sm",
+                        "contents": [
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "xs",
+                                "align": "center",
+                                "color": "#aaaaaa"
+                            }
+                            ],
+                            "margin": "none"
+                        },
+                        {
+                            "type": "separator",
+                            "margin": "md"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Status",
+                                "size": "sm",
+                                "color": "#0b5b67",
+                                "flex": 0,
+                                "weight": "bold"
+                            }
+                            ],
+                            "margin": "xl"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Pembayaran",
+                                "size": "sm",
+                                "color": "#555555",
+                                "flex": 0
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Pemesanan (Pulsa)",
+                                "size": "sm",
+                                "color": "#555555",
+                                "flex": 0
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "separator",
+                            "margin": "xxl"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "margin": "xxl",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Operator",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Nominal",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Nomor Tujuan",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "{}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                            {
+                                "type": "text",
+                                "text": "Harga",
+                                "size": "sm",
+                                "color": "#555555"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Rp {}",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                            ]
+                        }
+                        ]
+                    },
+                    {
+                        "type": "separator",
+                        "margin": "xxl"
+                    },
+                    {
+                        "type": "button",
+                        "action": {
+                        "type": "message",
+                        "label": "Perbarui",
+                        "text": "cek status pembelian"
+                        },
+                        "style": "primary",
+                        "margin": "lg",
+                        "color": "#0b5b67"
+                    }
+                    ]
+                },
+                "styles": {
+                    "footer": {
+                    "separator": true
+                    }
+                }
+                }
+                """.format(display_name, latest_transaction['order_id'], latest_transaction['created_at'], latest_transaction['payment_status'], latest_transaction['order_status'], latest_transaction['operator'], nominal, latest_transaction['phone_number'], price)
+                message = FlexSendMessage(
+                    alt_text="Detail Transaksi", contents=json.loads(bubble_string))
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    message
+                )
+            
         else:
             reply_message = context_chat[context]
             # Tambahin display name ke dalam message
@@ -1036,7 +1530,7 @@ def handle_postback(event):
     elif event.postback.data == "cek status":
         reply_message = "Berikut adalah status transaksi yang terbaru ya kak"
         latest_transaction = get_latesttransaction_by(user_id)
-        text_latest_trx = '''Status Transaksi ({}) : \nPulsa : {} \nHarga : Rp.{} \nNomor : {} \nStatus pembayaran: {} \nStatus pemesanan (pulsa) : {}'''.format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
+        text_latest_trx = '''Status Transaksi ({}) : \nPulsa : {} \nHarga : Rp {} \nNomor : {} \nStatus pembayaran: {} \nStatus pemesanan (pulsa) : {}'''.format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
         line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=reply_message), TextSendMessage(text=text_latest_trx)])
 
 @handler.add(BeaconEvent)
