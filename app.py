@@ -180,7 +180,7 @@ def handle_text_message(event):
             # Create Carousel Columns
             product_columns = []
             for product in list_product[:9]:
-                price = '{:,}'.format(product['price'])
+                price = '{:,}'.format(int(product['price']))
                 price = price.replace(',', '.')
                 if len(product['nominal']) > 8:
                     show = "Rp {}".format(price)
@@ -240,7 +240,7 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
-            price = '{:,}'.format(product['price'])
+            price = '{:,}'.format(int(product['price']))
             price = price.replace(',', '.')
             if len(product['nominal']) > 8:
                 show = "Rp {}".format(price)
@@ -266,7 +266,7 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
-            price = '{:,}'.format(product['price'])
+            price = '{:,}'.format(int(product['price']))
             price = price.replace(',', '.')
             if len(product['nominal']) > 8:
                 show = "Rp {}".format(price)
@@ -292,7 +292,7 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
-            price = '{:,}'.format(product['price'])
+            price = '{:,}'.format(int(product['price']))
             price = price.replace(',', '.')
             if len(product['nominal']) > 8:
                 show = "Rp {}".format(price)
@@ -318,7 +318,7 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
-            price = '{:,}'.format(product['price'])
+            price = '{:,}'.format(int(product['price']))
             price = price.replace(',', '.')
             if len(product['nominal']) > 8:
                 show = "Rp {}".format(price)
@@ -344,7 +344,7 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
-            price = '{:,}'.format(product['price'])
+            price = '{:,}'.format(int(product['price']))
             price = price.replace(',', '.')
             if len(product['nominal']) > 8:
                 show = "Rp {}".format(price)
@@ -370,7 +370,7 @@ def handle_text_message(event):
         # Create Carousel Columns
         product_columns = []
         for product in list_product[:9]:
-            price = '{:,}'.format(product['price'])
+            price = '{:,}'.format(int(product['price']))
             price = price.replace(',', '.')
             if len(product['nominal']) > 8:
                 show = "Rp {}".format(price)
@@ -468,8 +468,7 @@ def handle_text_message(event):
             nominal = nominal.replace(',', '.')
             # Make Flex Message
             if latest_transaction['payment_status'] == 'PAID' and latest_transaction['order_status'] == 'SUCCESS':
-                bubble_string = """
-                {
+                bubble_string = {
                 "type": "bubble",
                 "body": {
                     "type": "box",
@@ -479,9 +478,9 @@ def handle_text_message(event):
                         "type": "text",
                         "size": "xs",
                         "color": "#aaaaaa",
-                        "wrap": true,
+                        "wrap": True,
                         "margin": "none",
-                        "text": "{}"
+                        "text": display_name
                     },
                     {
                         "type": "text",
@@ -492,11 +491,11 @@ def handle_text_message(event):
                     },
                     {
                         "type": "text",
-                        "text": "{}",
+                        "text": latest_transaction['order_id'],
                         "weight": "bold",
                         "size": "xl",
                         "margin": "md",
-                        "wrap": true,
+                        "wrap": True,
                         "align": "center"
                     },
                     {
@@ -511,7 +510,7 @@ def handle_text_message(event):
                             "contents": [
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['created_at'],
                                 "size": "xs",
                                 "align": "center",
                                 "color": "#aaaaaa"
@@ -551,7 +550,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['payment_status'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -571,7 +570,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['order_status'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -595,7 +594,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['operator'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -614,7 +613,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": nominal,
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -633,7 +632,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['phone_number'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -652,7 +651,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "Rp {}",
+                                "text": "Rp {}".format(price),
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -670,7 +669,7 @@ def handle_text_message(event):
                         "action": {
                         "type": "message",
                         "label": "Beli Lagi",
-                        "text": "{} {}"
+                        "text": "{} {}".format(latest_transaction['phone_number'], latest_transaction['nominal'])
                         },
                         "style": "primary",
                         "margin": "lg",
@@ -680,20 +679,19 @@ def handle_text_message(event):
                 },
                 "styles": {
                     "footer": {
-                    "separator": true
+                    "separator": True
                     }
                 }
                 }
-                """.format(display_name, latest_transaction['order_id'], latest_transaction['created_at'], latest_transaction['payment_status'], latest_transaction['order_status'], latest_transaction['operator'], nominal, latest_transaction['phone_number'], price, latest_transaction['phone_number'], latest_transaction['nominal'])
+                json_input = json.dumps(bubble_string)
                 message = FlexSendMessage(
-                    alt_text="Detail Transaksi", contents=json.loads(bubble_string))
+                    alt_text="Detail Transaksi", contents=json.loads(json_input))
                 line_bot_api.reply_message(
                     event.reply_token,
                     message
                 )
             else:
-                bubble_string = """
-                {
+                bubble_string = {
                 "type": "bubble",
                 "body": {
                     "type": "box",
@@ -703,9 +701,9 @@ def handle_text_message(event):
                         "type": "text",
                         "size": "xs",
                         "color": "#aaaaaa",
-                        "wrap": true,
+                        "wrap": True,
                         "margin": "none",
-                        "text": "{}"
+                        "text": display_name
                     },
                     {
                         "type": "text",
@@ -716,11 +714,11 @@ def handle_text_message(event):
                     },
                     {
                         "type": "text",
-                        "text": "{}",
+                        "text": latest_transaction['order_id'],
                         "weight": "bold",
                         "size": "xl",
                         "margin": "md",
-                        "wrap": true,
+                        "wrap": True,
                         "align": "center"
                     },
                     {
@@ -735,7 +733,7 @@ def handle_text_message(event):
                             "contents": [
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['created_at'],
                                 "size": "xs",
                                 "align": "center",
                                 "color": "#aaaaaa"
@@ -775,7 +773,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['payment_status'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -795,7 +793,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['order_status'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -819,7 +817,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['operator'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -838,7 +836,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": nominal,
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -857,7 +855,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": latest_transaction['phone_number'],
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -876,7 +874,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "Rp {}",
+                                "text": "Rp {}".format(price),
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -904,18 +902,18 @@ def handle_text_message(event):
                 },
                 "styles": {
                     "footer": {
-                    "separator": true
+                    "separator": True
                     }
                 }
                 }
-                """.format(display_name, latest_transaction['order_id'], latest_transaction['created_at'], latest_transaction['payment_status'], latest_transaction['order_status'], latest_transaction['operator'], nominal, latest_transaction['phone_number'], price)
+                json_input = json.dumps(bubble_string)
                 message = FlexSendMessage(
-                    alt_text="Detail Transaksi", contents=json.loads(bubble_string))
+                    alt_text="Detail Transaksi", contents=json.loads(json_input))
                 line_bot_api.reply_message(
                     event.reply_token,
                     message
                 )
-            
+        
         else:
             reply_message = context_chat[context]
             # Tambahin display name ke dalam message
