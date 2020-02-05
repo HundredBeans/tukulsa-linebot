@@ -980,6 +980,8 @@ def handle_leave():
 @handler.add(PostbackEvent)
 def handle_postback(event):
     user_id = event.source.user_id
+    profile = line_bot_api.get_profile(user_id)
+    display_name = profile.display_name
     if event.postback.data == 'ping':
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text='pong'))
@@ -1033,7 +1035,7 @@ def handle_postback(event):
             reset = update_all(user_id, "", "", False, False, "")
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
         else:
-            bot_message = "Pembelian pulsa {} {} ke {} sudah terlanjur diproses ka, tidak bisa dibatalkan".format(status['operator'], status['nominal'], status['phone_number'])
+            bot_message = "Batal apa ya ka? Kak {}, sedang tidak dalam proses transaksi. Biar yakin, bisa dicek status transaksi dengan chat 'cek status transaksi' kapan aja".format(display_name)
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
 
     elif event.postback.data == "cek status":
