@@ -402,7 +402,7 @@ def handle_text_message(event):
             #     ]))
             # line_bot_api.reply_message(event.reply_token, quick_reply_msg)
             
-            Bikin carousel daftar operator
+            # Bikin carousel daftar operator
             message = TextSendMessage(text=reply_message)
             image_carousel_template = ImageCarouselTemplate(columns=[
                 ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/telkomsel.png', action=MessageAction(label='Telkomsel', text='telkomsel')),
