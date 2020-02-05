@@ -652,7 +652,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": "Rp {}",
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
@@ -876,7 +876,7 @@ def handle_text_message(event):
                             },
                             {
                                 "type": "text",
-                                "text": "{}",
+                                "text": "Rp {}",
                                 "size": "sm",
                                 "color": "#111111",
                                 "align": "end"
