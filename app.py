@@ -981,7 +981,7 @@ def handle_postback(event):
             template_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembayaran', template=buttons_template)
             bot_message_2 = "Untuk cek status transaksi, bisa chat 'cek status pembelian' kapan aja atau bisa klik tombol cek status di atas"
-            message_2 = TextSendMessage(text=message_2)
+            message_2 = TextSendMessage(text=bot_message_2)
             reset = update_all(user_id, "", "", False, False, "")
             line_bot_api.reply_message(event.reply_token, [template_message, message_2])
         elif status['status_number']:
