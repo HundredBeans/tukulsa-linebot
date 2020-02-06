@@ -396,7 +396,7 @@ def handle_text_message(event):
             operator = latest_transaction['operator']
             phone_number = latest_transaction['phone_number']
             # Make Flex Message
-            if latest_transaction['payment_status'] == 'PAID' and latest_transaction['order_status'] == 'SUCCESS':
+            if latest_transaction['payment_status'] == 'LUNAS' and latest_transaction['order_status'] == 'SUKSES':
                 text_action = "{} {}".format(phone_number, nominal)
                 label = "Beli Lagi"
                 bubble_string = detail_transaksi(display_name, order_id, created_at, payment_status, order_status, operator, nominal, phone_number, price, label, text_action )
