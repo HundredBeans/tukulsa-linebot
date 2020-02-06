@@ -54,6 +54,8 @@ from chatbot import bot_reply, context_chat
 from feature import cek_provider
 # endpoint
 from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url, get_alltransactions_by, get_latesttransaction_by
+# flex template
+from flexTemplate import detail_transaksi, daftar_operator, daftar_pulsa
 
 
 
@@ -177,28 +179,15 @@ def handle_text_message(event):
             bot_message = "Silahkan dipilih pulsa {}nya kak".format(data_provider["provider"])
             # GET Produk filter by provider
             list_product = get_product_by(data_provider["provider"])
-            # Create Carousel Columns
-            product_columns = []
-            for product in list_product[:9]:
-                price = '{:,}'.format(int(product['price']))
-                price = price.replace(',', '.')
-                if len(product['nominal']) > 8:
-                    show = "Rp {}".format(price)
-                else:
-                    nominal = '{:,}'.format(product['nominal'])
-                    nominal = nominal.replace(',', '.')
-                    show = "Pulsa {}".format(nominal)
-                carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
-                    MessageAction(label=show, text=product['nominal'])
-                ])
-                product_columns.append(carousel_column)
-            # Create Carousel Template
-            print(product_columns)
-            carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
-            template_message = TemplateSendMessage(
-                alt_text='List Product', template=carousel_template)
-            line_bot_api.reply_message(event.reply_token, template_message)
-            # LIMIT MAX 10
+            # Create Flex Carousel Template
+            bubble_string = daftar_pulsa(list_product)
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[bot_message, message]
+            )
 
         else:
             bot_message = "Nomornya ngga valid tuh kak, coba dicek lagi"
@@ -233,161 +222,94 @@ def handle_text_message(event):
 
     # List Product by operator #    
     elif text == "telkomsel":
-        bot_message = "Berikut pulsa {}nya kak".format('telkomsel')
-        message = TextSendMessage(text=bot_message)
+        bot_message = "Berikut daftar pulsa {}nya kak".format('telkomsel')
+        reply_message = TextSendMessage(text=bot_message)
         # GET Produk filter by provider
         list_product = get_product_by('telkomsel')
-        # Create Carousel Columns
-        product_columns = []
-        for product in list_product[:9]:
-            price = '{:,}'.format(int(product['price']))
-            price = price.replace(',', '.')
-            if len(product['nominal']) > 8:
-                show = "Rp {}".format(price)
-            else:
-                nominal = '{:,}'.format(product['nominal'])
-                nominal = nominal.replace(',', '.')
-                show = "Pulsa {}".format(nominal)
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
-                MessageAction(label=show, text=product['nominal'])
-            ])
-            product_columns.append(carousel_column)
-        # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
-        template_message = TemplateSendMessage(
-            alt_text='List Product', template=carousel_template)
-        line_bot_api.reply_message(event.reply_token, [message, template_message])
+        # Create Flex Carousel Template
+        bubble_string = daftar_pulsa(list_product)
+        # Convert dict into string
+        json_input = json.dumps(bubble_string)
+        message = FlexSendMessage(
+            alt_text="Daftar Produk", contents=json.loads(json_input))
+        line_bot_api.reply_message(
+            event.reply_token,[reply_message, message]
+        )
 
     elif text == "indosat":
-        bot_message = "Berikut pulsa {}nya kak".format('indosat')
-        message = TextSendMessage(text=bot_message)
+        bot_message = "Berikut daftar pulsa {}nya kak".format('indosat')
+        reply_message = TextSendMessage(text=bot_message)
         # GET Produk filter by provider
         list_product = get_product_by('indosat')
-        # Create Carousel Columns
-        product_columns = []
-        for product in list_product[:9]:
-            price = '{:,}'.format(int(product['price']))
-            price = price.replace(',', '.')
-            if len(product['nominal']) > 8:
-                show = "Rp {}".format(price)
-            else:
-                nominal = '{:,}'.format(product['nominal'])
-                nominal = nominal.replace(',', '.')
-                show = "Pulsa {}".format(nominal)
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
-                MessageAction(label=show, text=product['nominal'])
-            ])
-            product_columns.append(carousel_column)
-        # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
-        template_message = TemplateSendMessage(
-            alt_text='List Product', template=carousel_template)
-        line_bot_api.reply_message(event.reply_token, [message, template_message])
+        # Create Flex Carousel Template
+        bubble_string = daftar_pulsa(list_product)
+        # Convert dict into string
+        json_input = json.dumps(bubble_string)
+        message = FlexSendMessage(
+            alt_text="Daftar Produk", contents=json.loads(json_input))
+        line_bot_api.reply_message(
+            event.reply_token,[reply_message, message]
+        )
     
     elif text == "xl":
-        bot_message = "Berikut pulsa {}nya kak".format('xl')
-        message = TextSendMessage(text=bot_message)
+        bot_message = "Berikut daftar pulsa {}nya kak".format('xl')
+        reply_message = TextSendMessage(text=bot_message)
         # GET Produk filter by provider
         list_product = get_product_by('xl')
-        # Create Carousel Columns
-        product_columns = []
-        for product in list_product[:9]:
-            price = '{:,}'.format(int(product['price']))
-            price = price.replace(',', '.')
-            if len(product['nominal']) > 8:
-                show = "Rp {}".format(price)
-            else:
-                nominal = '{:,}'.format(product['nominal'])
-                nominal = nominal.replace(',', '.')
-                show = "Pulsa {}".format(nominal)
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
-                MessageAction(label=show, text=product['nominal'])
-            ])
-            product_columns.append(carousel_column)
-        # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
-        template_message = TemplateSendMessage(
-            alt_text='List Product', template=carousel_template)
-        line_bot_api.reply_message(event.reply_token, [message, template_message])
+        # Create Flex Carousel Template
+        bubble_string = daftar_pulsa(list_product)
+        # Convert dict into string
+        json_input = json.dumps(bubble_string)
+        message = FlexSendMessage(
+            alt_text="Daftar Produk", contents=json.loads(json_input))
+        line_bot_api.reply_message(
+            event.reply_token,[reply_message, message]
+        )
     
     elif text == "three":
-        bot_message = "Berikut pulsa {}nya kak".format('three')
-        message = TextSendMessage(text=bot_message)
+        bot_message = "Berikut daftar pulsa {}nya kak".format('three')
+        reply_message = TextSendMessage(text=bot_message)
         # GET Produk filter by provider
         list_product = get_product_by('three')
-        # Create Carousel Columns
-        product_columns = []
-        for product in list_product[:9]:
-            price = '{:,}'.format(int(product['price']))
-            price = price.replace(',', '.')
-            if len(product['nominal']) > 8:
-                show = "Rp {}".format(price)
-            else:
-                nominal = '{:,}'.format(product['nominal'])
-                nominal = nominal.replace(',', '.')
-                show = "Pulsa {}".format(nominal)
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
-                MessageAction(label=show, text=product['nominal'])
-            ])
-            product_columns.append(carousel_column)
-        # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
-        template_message = TemplateSendMessage(
-            alt_text='List Product', template=carousel_template)
-        line_bot_api.reply_message(event.reply_token, [message, template_message])
+        # Create Flex Carousel Template
+        bubble_string = daftar_pulsa(list_product)
+        # Convert dict into string
+        json_input = json.dumps(bubble_string)
+        message = FlexSendMessage(
+            alt_text="Daftar Produk", contents=json.loads(json_input))
+        line_bot_api.reply_message(
+            event.reply_token,[reply_message, message]
+        )
     
     elif text == "axis":
-        bot_message = "Berikut pulsa {}nya kak".format('axis')
-        message = TextSendMessage(text=bot_message)
+        bot_message = "Berikut daftar pulsa {}nya kak".format('axis')
+        reply_message = TextSendMessage(text=bot_message)
         # GET Produk filter by provider
         list_product = get_product_by('axis')
-        # Create Carousel Columns
-        product_columns = []
-        for product in list_product[:9]:
-            price = '{:,}'.format(int(product['price']))
-            price = price.replace(',', '.')
-            if len(product['nominal']) > 8:
-                show = "Rp {}".format(price)
-            else:
-                nominal = '{:,}'.format(product['nominal'])
-                nominal = nominal.replace(',', '.')
-                show = "Pulsa {}".format(nominal)
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
-                MessageAction(label=show, text=product['nominal'])
-            ])
-            product_columns.append(carousel_column)
-        # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
-        template_message = TemplateSendMessage(
-            alt_text='List Product', template=carousel_template)
-        line_bot_api.reply_message(event.reply_token, [message, template_message])
+        # Create Flex Carousel Template
+        bubble_string = daftar_pulsa(list_product)
+        # Convert dict into string
+        json_input = json.dumps(bubble_string)
+        message = FlexSendMessage(
+            alt_text="Daftar Produk", contents=json.loads(json_input))
+        line_bot_api.reply_message(
+            event.reply_token,[reply_message, message]
+        )
     
     elif text == "smartfren":
-        bot_message = "Berikut pulsa {}nya kak".format('smartfren')
-        message = TextSendMessage(text=bot_message)
+        bot_message = "Berikut daftar pulsa {}nya kak".format('smartfren')
+        reply_message = TextSendMessage(text=bot_message)
         # GET Produk filter by provider
         list_product = get_product_by('smartfren')
-        # Create Carousel Columns
-        product_columns = []
-        for product in list_product[:9]:
-            price = '{:,}'.format(int(product['price']))
-            price = price.replace(',', '.')
-            if len(product['nominal']) > 8:
-                show = "Rp {}".format(price)
-            else:
-                nominal = '{:,}'.format(product['nominal'])
-                nominal = nominal.replace(',', '.')
-                show = "Pulsa {}".format(nominal)
-            carousel_column = CarouselColumn(thumbnail_image_url=product["image"], title="{} {}".format(product['operator'], product['nominal']), text="harga Rp {}".format(price), actions=[
-                MessageAction(label=show, text=product['nominal'])
-            ])
-            product_columns.append(carousel_column)
-        # Create Carousel Template
-        carousel_template = CarouselTemplate(columns=product_columns, image_size="contain")
-        template_message = TemplateSendMessage(
-            alt_text='List Product', template=carousel_template)
-        line_bot_api.reply_message(event.reply_token, [message, template_message])
-
+        # Create Flex Carousel Template
+        bubble_string = daftar_pulsa(list_product)
+        # Convert dict into string
+        json_input = json.dumps(bubble_string)
+        message = FlexSendMessage(
+            alt_text="Daftar Produk", contents=json.loads(json_input))
+        line_bot_api.reply_message(
+            event.reply_token,[reply_message, message]
+        )
     elif text == "yakin":
     # Check if user already send Phone Number and Nominal info
         status = get_chat_info(user_id)
@@ -432,8 +354,9 @@ def handle_text_message(event):
             reset = update_all(user_id, "", "", False, False, "")
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
         else:
-            bot_message = "Batal apa ya ka? \nKak {}, sedang tidak dalam proses transaksi. \nBiar yakin, bisa dicek status transaksi dengan chat 'cek status transaksi' kapan aja".format(display_name)
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
+            bot_message = "Batal apa ya ka? \nKak {}, sedang tidak dalam proses transaksi".format(display_name)
+            bot_message_2 = "Biar yakin, bisa dicek status transaksi dengan chat 'cek status transaksi' kapan aja"
+            line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=bot_message), TextSendMessage(text=bot_message_2)])
     else:
         # chatbot
         context = bot_reply(text)
@@ -444,20 +367,16 @@ def handle_text_message(event):
             line_bot_api.reply_message(event.reply_token, message)
         elif context == "cek produk":
             reply_message = context_chat[context]
-            # Bikin carousel daftar operator
-            message = TextSendMessage(text=reply_message)
-            image_carousel_template = ImageCarouselTemplate(columns=[
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/telkomsel.png', action=MessageAction(label='Telkomsel', text='telkomsel')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/indosat.png', action=MessageAction(label='Indosat', text='indosat')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/xl.png', action=MessageAction(label='XL', text='xl')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/three.png', action=MessageAction(label='3 (Three)', text='three')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/axis.png', action=MessageAction(label='Axis', text='axis')),
-                ImageCarouselColumn(image_url='https://developer.mobilepulsa.net/assets/images/products/smartfren.png', action=MessageAction(label='Smartfren', text='smartfren'))
-            ], image_size="contain")
-            template_message = TemplateSendMessage(
-                alt_text="List Product", template=image_carousel_template
+            # Generate Flex from flexTemplate
+            bot_message = TextSendMessage(text=reply_message)
+            bubble_string = daftar_operator()
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[bot_message, message]
             )
-            line_bot_api.reply_message(event.reply_token, [message, template_message])
         elif context == "cek riwayat":
             reply_message = context_chat[context].format(display_name)
             # Get Transaction from Backend
@@ -466,223 +385,19 @@ def handle_text_message(event):
             price = price.replace(',', '.')
             nominal = '{:,}'.format(latest_transaction['nominal'])
             nominal = nominal.replace(',', '.')
+            # Define each variable
+            order_id = latest_transaction['order_id']
+            created_at = latest_transaction['created_at']
+            payment_status = latest_transaction['payment_status']
+            order_status = latest_transaction['order_status']
+            operator = latest_transaction['operator']
+            phone_number = latest_transaction['phone_number']
             # Make Flex Message
             if latest_transaction['payment_status'] == 'PAID' and latest_transaction['order_status'] == 'SUCCESS':
-                bubble_string = {
-                "type": "bubble",
-                "body": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                    {
-                        "type": "text",
-                        "size": "xs",
-                        "color": "#aaaaaa",
-                        "wrap": True,
-                        "margin": "none",
-                        "text": display_name
-                    },
-                    {
-                        "type": "text",
-                        "text": "Detail Transaksi",
-                        "weight": "bold",
-                        "color": "#0b5b67",
-                        "size": "sm"
-                    },
-                    {
-                        "type": "text",
-                        "text": latest_transaction['order_id'],
-                        "weight": "bold",
-                        "size": "xl",
-                        "margin": "md",
-                        "wrap": True,
-                        "align": "center"
-                    },
-                    {
-                        "type": "box",
-                        "layout": "vertical",
-                        "margin": "xs",
-                        "spacing": "sm",
-                        "contents": [
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": latest_transaction['created_at'],
-                                "size": "xs",
-                                "align": "center",
-                                "color": "#aaaaaa"
-                            }
-                            ],
-                            "margin": "none"
-                        },
-                        {
-                            "type": "separator",
-                            "margin": "md"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Status",
-                                "size": "sm",
-                                "color": "#0b5b67",
-                                "flex": 0,
-                                "weight": "bold"
-                            }
-                            ],
-                            "margin": "xl"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Pembayaran",
-                                "size": "sm",
-                                "color": "#555555",
-                                "flex": 0
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['payment_status'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Pemesanan (Pulsa)",
-                                "size": "sm",
-                                "color": "#555555",
-                                "flex": 0
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['order_status'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "separator",
-                            "margin": "xxl"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "margin": "xxl",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Operator",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['operator'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Nominal",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": nominal,
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Nomor Tujuan",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['phone_number'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Harga",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": "Rp {}".format(price),
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        }
-                        ]
-                    },
-                    {
-                        "type": "separator",
-                        "margin": "xxl"
-                    },
-                    {
-                        "type": "button",
-                        "action": {
-                        "type": "message",
-                        "label": "Beli Lagi",
-                        "text": "{} {}".format(latest_transaction['phone_number'], latest_transaction['nominal'])
-                        },
-                        "style": "primary",
-                        "margin": "lg",
-                        "color": "#0b5b67"
-                    }
-                    ]
-                },
-                "styles": {
-                    "footer": {
-                    "separator": True
-                    }
-                }
-                }
+                text_action = "{} {}".format(phone_number, nominal)
+                label = "Beli Lagi"
+                bubble_string = detail_transaksi(display_name, order_id, created_at, payment_status, order_status, operator, nominal, phone_number, price, label, text_action )
+                # Convert dict into string
                 json_input = json.dumps(bubble_string)
                 message = FlexSendMessage(
                     alt_text="Detail Transaksi", contents=json.loads(json_input))
@@ -691,221 +406,10 @@ def handle_text_message(event):
                     message
                 )
             else:
-                bubble_string = {
-                "type": "bubble",
-                "body": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                    {
-                        "type": "text",
-                        "size": "xs",
-                        "color": "#aaaaaa",
-                        "wrap": True,
-                        "margin": "none",
-                        "text": display_name
-                    },
-                    {
-                        "type": "text",
-                        "text": "Detail Transaksi",
-                        "weight": "bold",
-                        "color": "#0b5b67",
-                        "size": "sm"
-                    },
-                    {
-                        "type": "text",
-                        "text": latest_transaction['order_id'],
-                        "weight": "bold",
-                        "size": "xl",
-                        "margin": "md",
-                        "wrap": True,
-                        "align": "center"
-                    },
-                    {
-                        "type": "box",
-                        "layout": "vertical",
-                        "margin": "xs",
-                        "spacing": "sm",
-                        "contents": [
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": latest_transaction['created_at'],
-                                "size": "xs",
-                                "align": "center",
-                                "color": "#aaaaaa"
-                            }
-                            ],
-                            "margin": "none"
-                        },
-                        {
-                            "type": "separator",
-                            "margin": "md"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Status",
-                                "size": "sm",
-                                "color": "#0b5b67",
-                                "flex": 0,
-                                "weight": "bold"
-                            }
-                            ],
-                            "margin": "xl"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Pembayaran",
-                                "size": "sm",
-                                "color": "#555555",
-                                "flex": 0
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['payment_status'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Pemesanan (Pulsa)",
-                                "size": "sm",
-                                "color": "#555555",
-                                "flex": 0
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['order_status'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "separator",
-                            "margin": "xxl"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "margin": "xxl",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Operator",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['operator'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Nominal",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": nominal,
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Nomor Tujuan",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": latest_transaction['phone_number'],
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Harga",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": "Rp {}".format(price),
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        }
-                        ]
-                    },
-                    {
-                        "type": "separator",
-                        "margin": "xxl"
-                    },
-                    {
-                        "type": "button",
-                        "action": {
-                        "type": "message",
-                        "label": "Perbarui",
-                        "text": "cek status pembelian"
-                        },
-                        "style": "primary",
-                        "margin": "lg",
-                        "color": "#0b5b67"
-                    }
-                    ]
-                },
-                "styles": {
-                    "footer": {
-                    "separator": True
-                    }
-                }
-                }
+                text_action = "cek status pembelian"
+                label = "Cek Status"
+                bubble_string = detail_transaksi(display_name, order_id, created_at, payment_status, order_status, operator, nominal, phone_number, price, label, text_action)
+                # Convert dict into string
                 json_input = json.dumps(bubble_string)
                 message = FlexSendMessage(
                     alt_text="Detail Transaksi", contents=json.loads(json_input))
