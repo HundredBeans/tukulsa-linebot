@@ -13,7 +13,7 @@
   },
   {
     "tag": "halo",
-    "patterns": ["halo", "Hi"],
+    "patterns": ["halo", "Hi", "hai", "hello"],
     "responses": ["haloo kak {}"],
     "context_set": ""
   },
@@ -37,20 +37,14 @@
   },
   {
     "tag": "cek riwayat",
-    "patterns": ["Mau cek riwayat transaksi", "liat transaksi terakhir", "cek status pembelian", "cek transaksi yang terakhir dong", "cek riwayat transaksi dong", "cek status transaksi"],
+    "patterns": ["liat transaksi terakhir", "cek status pembelian", "cek transaksi yang terakhir dong", "cek riwayat transaksi dong", "cek status transaksi"],
     "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
     "context_set": ""
   },
   {
-    "tag": "cek riwayat kemarin",
-    "patterns": ["mau cek riwayat transaksi kemarin", "kemarin"],
-    "responses": ["oke kak {}, kemarin kakak transaksi ....."],
-    "context_set": ""
-  },
-  {
-    "tag": "cek riwayat bulan",
-    "patterns": ["mau cek riwayat transaksi pada bulan januari", "transaksi februari", "transaksi bulan lalu", "transaksi maret", "transaksi april", "transaksi mei", "transaksi juni", "transaksi juli", "transaksi agustus", "transaksi september", "transaksi oktober", "transaksi november", "transaksi desember"],
-    "responses": ["Riwayat transaksi pulsanya kak {} seperti ini ya..."],
+    "tag": "cek riwayat semua",
+    "patterns": ["Mau cek riwayat transaksi", "Mau cek daftar transaksi", "liat semua daftar transaksi", "cek history transactions"],
+    "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
     "context_set": ""
   },
   {
@@ -69,6 +63,12 @@
     "tag": "tanya beneran",
     "patterns": ["ini apa?", "kamu siapa?", "kamu bisa apa?", "ini bot apa ya"],
     "responses": ["aku Tukulsa, kerjaannya ya cuma nawarin pulsa sama jual pulsa. Jangan nanya doang, beli dong"],
+    "context_set": ""
+  },
+  {
+    "tag": "admin login",
+    "patterns": ["mau login", "admin mau login", "minta security code", "bagi security code"],
+    "responses": ["Silahkan, tuan {}"],
     "context_set": ""
   }
 ]

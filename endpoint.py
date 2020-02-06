@@ -226,3 +226,24 @@ def get_latesttransaction_by(line_id):
     data = requests.post(url, json=json_data, headers=headers).text
     parsed = json.loads(data)
     return parsed
+
+def get_security_code(line_id):
+    """
+    GET Security Code for Admin to Login
+    
+    Parameters
+    ---------
+        line_id : User's LINE ID to authenticate Admin as string.
+
+    Return
+    ------
+        parsed response from TUKULSA Backend (security code)
+    """
+    url = base_url + 'admin/securitycode?line_id=' + line_id
+    headers = {'content-type' : 'application/json'}
+
+    data = requests.post(url, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
+
+print(get_security_code("Ubf1a7583f2c45b56143efd083533c2ef"))
