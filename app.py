@@ -177,6 +177,7 @@ def handle_text_message(event):
             # Update nomor ke backend
             update = update_number(user_id, nomor[0], True, data_provider['provider'])
             bot_message = "Silahkan dipilih pulsa {}nya kak".format(data_provider["provider"])
+            reply_message = TextSendMessage(text=bot_message)
             # GET Produk filter by provider
             list_product = get_product_by(data_provider["provider"])
             # Create Flex Carousel Template
@@ -186,7 +187,7 @@ def handle_text_message(event):
             message = FlexSendMessage(
                 alt_text="Daftar Produk", contents=json.loads(json_input))
             line_bot_api.reply_message(
-                event.reply_token,[bot_message, message]
+                event.reply_token,[reply_message, message]
             )
 
         else:
