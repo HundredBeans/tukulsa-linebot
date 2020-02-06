@@ -199,10 +199,10 @@ def handle_text_message(event):
         # Format nominal jadi angka doang
         nominal = nominal[0].replace(" ", "").replace(
             "ribu", '000').replace(".", "").replace(",", "")
-        nominal = '{:,}'.format(int(nominal))
-        nominal = nominal.replace(',', '.')
         # Update nominal ke backend
         update = update_nominal(user_id, nominal, True)
+        nominal = '{:,}'.format(int(nominal))
+        nominal = nominal.replace(',', '.')
         if update['status_number']:
             nomor_user = update['phone_number']
             nomor_kode = nomor_user[:4]
@@ -422,8 +422,8 @@ def handle_text_message(event):
                 )
         elif context == "admin login":
             code = get_security_code(user_id)['code']
-            bot_message = context_chat[context].format(code)
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
+            bot_message = context_chat[context].format(display_name)
+            line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=bot_message), TextSendMessage(text=code)])
         else:
             reply_message = context_chat[context]
             # Tambahin display name ke dalam message
