@@ -245,5 +245,3 @@ def get_security_code(line_id):
     data = requests.post(url, headers=headers).text
     parsed = json.loads(data)
     return parsed
-
-print(get_security_code("Ubf1a7583f2c45b56143efd083533c2ef"))
