@@ -297,7 +297,7 @@ def handle_text_message(event):
             event.reply_token,[reply_message, message]
         )
     
-    elif text == "smart":
+    elif text == "smartfren":
         bot_message = "Berikut daftar pulsa {}nya kak".format('smartfren')
         reply_message = TextSendMessage(text=bot_message)
         # GET Produk filter by provider
@@ -1040,7 +1040,7 @@ def handle_postback(event):
         # GET Produk filter by provider
         list_product = get_product_by('telkomsel')
         # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product[9:])
+        bubble_string = daftar_pulsa_akhir(list_product)
         # Convert dict into string
         json_input = json.dumps(bubble_string)
         message = FlexSendMessage(
@@ -1052,7 +1052,7 @@ def handle_postback(event):
         # GET Produk filter by provider
         list_product = get_product_by('indosat')
         # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product[9:])
+        bubble_string = daftar_pulsa_akhir(list_product)
         # Convert dict into string
         json_input = json.dumps(bubble_string)
         message = FlexSendMessage(
@@ -1064,7 +1064,7 @@ def handle_postback(event):
         # GET Produk filter by provider
         list_product = get_product_by('xl')
         # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product[9:])
+        bubble_string = daftar_pulsa_akhir(list_product)
         # Convert dict into string
         json_input = json.dumps(bubble_string)
         message = FlexSendMessage(
@@ -1076,7 +1076,7 @@ def handle_postback(event):
         # GET Produk filter by provider
         list_product = get_product_by('three')
         # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product[9:])
+        bubble_string = daftar_pulsa_akhir(list_product)
         # Convert dict into string
         json_input = json.dumps(bubble_string)
         message = FlexSendMessage(
@@ -1088,7 +1088,7 @@ def handle_postback(event):
         # GET Produk filter by provider
         list_product = get_product_by('axis')
         # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product[9:])
+        bubble_string = daftar_pulsa_akhir(list_product)
         # Convert dict into string
         json_input = json.dumps(bubble_string)
         message = FlexSendMessage(
@@ -1100,7 +1100,7 @@ def handle_postback(event):
         # GET Produk filter by provider
         list_product = get_product_by('smart')
         # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product[9:])
+        bubble_string = daftar_pulsa_akhir(list_product)
         # Convert dict into string
         json_input = json.dumps(bubble_string)
         message = FlexSendMessage(
