@@ -1,7 +1,8 @@
 import requests
 import json
+import os
 
-base_url = 'https://tukulsa-new-test.herokuapp.com/'
+base_url = os.getenv('BASE_URL', None)
 
 def post_user(line_id, display_name):
     """
