@@ -238,17 +238,6 @@ def daftar_operator():
             "offsetBottom": "30px"
           },
           {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip15.png",
-            "position": "absolute",
-            "aspectMode": "fit",
-            "offsetTop": "0px",
-            "offsetBottom": "0px",
-            "offsetStart": "0px",
-            "offsetEnd": "0px",
-            "size": "full"
-          },
-          {
             "type": "box",
             "layout": "horizontal",
             "contents": [
@@ -294,17 +283,6 @@ def daftar_operator():
             "aspectRatio": "1:1",
             "gravity": "center",
             "offsetBottom": "30px"
-          },
-          {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip15.png",
-            "position": "absolute",
-            "aspectMode": "fit",
-            "offsetTop": "0px",
-            "offsetBottom": "0px",
-            "offsetStart": "0px",
-            "offsetEnd": "0px",
-            "size": "full"
           },
           {
             "type": "box",
@@ -354,17 +332,6 @@ def daftar_operator():
             "offsetBottom": "10px"
           },
           {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip15.png",
-            "position": "absolute",
-            "aspectMode": "fit",
-            "offsetTop": "0px",
-            "offsetBottom": "0px",
-            "offsetStart": "0px",
-            "offsetEnd": "0px",
-            "size": "full"
-          },
-          {
             "type": "box",
             "layout": "horizontal",
             "contents": [
@@ -410,17 +377,6 @@ def daftar_operator():
             "aspectRatio": "1:1",
             "gravity": "center",
             "offsetTop": "15px"
-          },
-          {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip15.png",
-            "position": "absolute",
-            "aspectMode": "fit",
-            "offsetTop": "0px",
-            "offsetBottom": "0px",
-            "offsetStart": "0px",
-            "offsetEnd": "0px",
-            "size": "full"
           },
           {
             "type": "box",
@@ -470,17 +426,6 @@ def daftar_operator():
             "offsetBottom": "10px"
           },
           {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip15.png",
-            "position": "absolute",
-            "aspectMode": "fit",
-            "offsetTop": "0px",
-            "offsetBottom": "0px",
-            "offsetStart": "0px",
-            "offsetEnd": "0px",
-            "size": "full"
-          },
-          {
             "type": "box",
             "layout": "horizontal",
             "contents": [
@@ -526,17 +471,6 @@ def daftar_operator():
             "aspectRatio": "1:1",
             "gravity": "center",
             "offsetBottom": "30px"
-          },
-          {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip15.png",
-            "position": "absolute",
-            "aspectMode": "fit",
-            "offsetTop": "0px",
-            "offsetBottom": "0px",
-            "offsetStart": "0px",
-            "offsetEnd": "0px",
-            "size": "full"
           },
           {
             "type": "box",
@@ -594,20 +528,12 @@ def detail_pulsa(image, operator, nominal, price, valid_to, raw_nominal):
         "url": image,
         "size": "full",
         "aspectRatio": "20:13",
-        "aspectMode": "fit",
-        "action": {
-          "type": "uri",
-          "uri": "https://linecorp.com"
-        }
+        "aspectMode": "fit"
       },
       "body": {
         "type": "box",
         "layout": "vertical",
         "spacing": "md",
-        "action": {
-          "type": "uri",
-          "uri": "https://linecorp.com"
-        },
         "contents": [
           {
             "type": "text",
@@ -689,9 +615,48 @@ def detail_pulsa(image, operator, nominal, price, valid_to, raw_nominal):
     
     return list_json
 
-def daftar_pulsa(list_product):
+def daftar_pulsa_awal(list_product):
     list_json = []
     for product in list_product[:9]:
+        price = '{:,}'.format(int(product['price']))
+        price = price.replace(',', '.')
+        if len(product['nominal']) > 8:
+            nominal = product['nominal']
+        else:
+            nominal = '{:,}'.format(int(product['nominal']))
+            nominal = nominal.replace(',', '.')
+        detail_product = detail_pulsa(product['image'], product['operator'], nominal, price, product['valid_to'], product['nominal'])
+        list_json.append(detail_product)
+    lainnya = {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "flex": 1,
+            "gravity": "center",
+            "action": {
+              "type": "postback",
+              "label": "Lihat Lainnya",
+              "data": list_product[0]['operator']
+            }
+          }
+        ]
+      }
+    }
+    list_json.append(lainnya)
+    pulsa_json = {
+  "type": "carousel",
+  "contents": list_json
+}
+    return pulsa_json
+
+def daftar_pulsa_akhir(list_product):
+    list_json = []
+    for product in list_product[9:]:
         price = '{:,}'.format(int(product['price']))
         price = price.replace(',', '.')
         if len(product['nominal']) > 8:
