@@ -21,13 +21,13 @@ context_chat = {
     "complaint":"Oke kak {}, saya akan bantu cek status pembeliannya ya kak",
     "terima kasih":"iya kak {}, sama-sama :)",
     "cek riwayat":"Oke kak {}, berikut riwayat transaksinya ya kak",
-    "cek riwayat kemarin":"oke kak {}, berikut riwayat transaksi kemarinnya ya",
-    "cek riwayat bulan":"Riwayat transaksinya {} untuk bulan itu seperti ini ya kak",
+    "cek riwayat semua":"Oke kak {}, berikut riwayat transaksinya ya kak",
     "cek produk":"Lengkap kak, Ini daftar operatornya. Bisa dipilih",
     "cek produk spesifik":"Ini list pulsanya ya kak",
     "keluar konteks":"Sori cuy, ane cuma jual pulsa. Kalo mau beli langsung chat aja, jangan aneh-aneh",
     "tanya beneran":"aku Tukulsa, kerjaannya ya cuma nawarin pulsa sama jual pulsa. Jangan nanya doang, beli dong",
-    "low prob":"Maksudnya apa tuh kak?"
+    "low prob":"Maksudnya apa tuh kak?",
+    "admin login":"Silahkan, tuan {}"
 }
 
 with open("intents.json") as file:

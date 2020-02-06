@@ -53,7 +53,7 @@ from chatbot import bot_reply, context_chat
 # feature
 from feature import cek_provider
 # endpoint
-from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url, get_alltransactions_by, get_latesttransaction_by
+from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url, get_alltransactions_by, get_latesttransaction_by, get_security_code
 # flex template
 from flexTemplate import detail_transaksi, daftar_operator, daftar_pulsa_awal, daftar_pulsa_akhir
 
@@ -199,6 +199,8 @@ def handle_text_message(event):
         # Format nominal jadi angka doang
         nominal = nominal[0].replace(" ", "").replace(
             "ribu", '000').replace(".", "").replace(",", "")
+        nominal = '{:,}'.format(int(nominal))
+        nominal = nominal.replace(',', '.')
         # Update nominal ke backend
         update = update_nominal(user_id, nominal, True)
         if update['status_number']:
@@ -418,7 +420,10 @@ def handle_text_message(event):
                     event.reply_token,
                     message
                 )
-        
+        elif context == "admin login":
+            code = get_security_code(user_id)['code']
+            bot_message = context_chat[context].format(code)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=bot_message))
         else:
             reply_message = context_chat[context]
             # Tambahin display name ke dalam message
