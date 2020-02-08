@@ -979,9 +979,16 @@ def handle_postback(event):
     user_id = event.source.user_id
     profile = line_bot_api.get_profile(user_id)
     display_name = profile.display_name
-    if event.postback.data == 'ping':
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='pong'))
+    pattern_complaint = r"laporkan masalah TUKULSAORDER.?-\d+"
+    pattern_order = r"TUKULSAORDER.?-\d+"
+    complaint_keyword = re.findall(pattern_complaint, event.postback.data)
+    # HANDLE COMPLAINT
+    if len(complaint_keyword) == 1:
+        order_id = re.findall(pattern_order, event.postback.data)
+        order_id = order_id[0]
+        # GET TRANSACTION INFO BASED ON order_id
+        
+
     elif event.postback.data == 'datetime_postback':
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text=event.postback.params['datetime']))
@@ -1040,79 +1047,6 @@ def handle_postback(event):
         latest_transaction = get_latesttransaction_by(user_id)
         text_latest_trx = '''Status Transaksi ({}) : \nPulsa : {} \nHarga : Rp {} \nNomor : {} \nStatus pembayaran: {} \nStatus pemesanan (pulsa) : {}'''.format(latest_transaction['created_at'], latest_transaction['label'], latest_transaction['price'], latest_transaction['phone_number'], latest_transaction['payment_status'], latest_transaction['order_status'])
         line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=reply_message), TextSendMessage(text=text_latest_trx)])
-    # GET Postback from list product
-    elif event.postback.data == "Telkomsel":
-        # GET Produk filter by provider
-        list_product = get_product_by('telkomsel')
-        # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product)
-        # Convert dict into string
-        json_input = json.dumps(bubble_string)
-        message = FlexSendMessage(
-            alt_text="Daftar Produk", contents=json.loads(json_input))
-        line_bot_api.reply_message(
-            event.reply_token,message
-        )
-    elif event.postback.data == "Indosat":
-        # GET Produk filter by provider
-        list_product = get_product_by('indosat')
-        # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product)
-        # Convert dict into string
-        json_input = json.dumps(bubble_string)
-        message = FlexSendMessage(
-            alt_text="Daftar Produk", contents=json.loads(json_input))
-        line_bot_api.reply_message(
-            event.reply_token,message
-        )
-    elif event.postback.data == "XL":
-        # GET Produk filter by provider
-        list_product = get_product_by('xl')
-        # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product)
-        # Convert dict into string
-        json_input = json.dumps(bubble_string)
-        message = FlexSendMessage(
-            alt_text="Daftar Produk", contents=json.loads(json_input))
-        line_bot_api.reply_message(
-            event.reply_token,message
-        )
-    elif event.postback.data == "Three":
-        # GET Produk filter by provider
-        list_product = get_product_by('three')
-        # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product)
-        # Convert dict into string
-        json_input = json.dumps(bubble_string)
-        message = FlexSendMessage(
-            alt_text="Daftar Produk", contents=json.loads(json_input))
-        line_bot_api.reply_message(
-            event.reply_token,message
-        )
-    elif event.postback.data == "AXIS":
-        # GET Produk filter by provider
-        list_product = get_product_by('axis')
-        # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product)
-        # Convert dict into string
-        json_input = json.dumps(bubble_string)
-        message = FlexSendMessage(
-            alt_text="Daftar Produk", contents=json.loads(json_input))
-        line_bot_api.reply_message(
-            event.reply_token,message
-        )
-    elif event.postback.data == "Smart":
-        # GET Produk filter by provider
-        list_product = get_product_by('smart')
-        # Create Flex Carousel Template
-        bubble_string = daftar_pulsa_akhir(list_product)
-        # Convert dict into string
-        json_input = json.dumps(bubble_string)
-        message = FlexSendMessage(
-            alt_text="Daftar Produk", contents=json.loads(json_input))
-        line_bot_api.reply_message(
-            event.reply_token,message
-        )
 
 @handler.add(BeaconEvent)
 def handle_beacon(event):
