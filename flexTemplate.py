@@ -2,220 +2,242 @@ import json
 
 def detail_transaksi(display_name, order_id, created_at, payment_status, order_status, operator, nominal, phone_number, price, label, text_action):
     transaksi_json = {
-                "type": "bubble",
-                "body": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                    {
-                        "type": "text",
-                        "size": "xs",
-                        "color": "#aaaaaa",
-                        "wrap": True,
-                        "margin": "none",
-                        "text": display_name
-                    },
-                    {
-                        "type": "text",
-                        "text": "Detail Transaksi",
-                        "weight": "bold",
-                        "color": "#0b5b67",
-                        "size": "sm"
-                    },
-                    {
-                        "type": "text",
-                        "text": order_id,
-                        "weight": "bold",
-                        "size": "xl",
-                        "margin": "md",
-                        "wrap": True,
-                        "align": "center"
-                    },
-                    {
-                        "type": "box",
-                        "layout": "vertical",
-                        "margin": "xs",
-                        "spacing": "sm",
-                        "contents": [
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": created_at,
-                                "size": "xs",
-                                "align": "center",
-                                "color": "#aaaaaa"
-                            }
-                            ],
-                            "margin": "none"
-                        },
-                        {
-                            "type": "separator",
-                            "margin": "md"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Status",
-                                "size": "sm",
-                                "color": "#0b5b67",
-                                "flex": 0,
-                                "weight": "bold"
-                            }
-                            ],
-                            "margin": "xl"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Pembayaran",
-                                "size": "sm",
-                                "color": "#555555",
-                                "flex": 0
-                            },
-                            {
-                                "type": "text",
-                                "text": payment_status,
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Pemesanan (Pulsa)",
-                                "size": "sm",
-                                "color": "#555555",
-                                "flex": 0
-                            },
-                            {
-                                "type": "text",
-                                "text": order_status,
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "separator",
-                            "margin": "xxl"
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "margin": "xxl",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Operator",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": operator,
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Nominal",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": nominal,
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Nomor Tujuan",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": phone_number,
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Harga",
-                                "size": "sm",
-                                "color": "#555555"
-                            },
-                            {
-                                "type": "text",
-                                "text": "Rp {}".format(price),
-                                "size": "sm",
-                                "color": "#111111",
-                                "align": "end"
-                            }
-                            ]
-                        }
-                        ]
-                    },
-                    {
-                        "type": "separator",
-                        "margin": "xxl"
-                    },
-                    {
-                        "type": "button",
-                        "action": {
-                        "type": "message",
-                        "label": label,
-                        "text": text_action
-                        },
-                        "style": "primary",
-                        "margin": "lg",
-                        "color": "#0b5b67"
-                    }
-                    ]
-                },
-                "styles": {
-                    "footer": {
-                    "separator": True
-                    }
-                }
-                }
+  "type": "bubble",
+  "body": {
+    "layout": "vertical",
+    "type": "box",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "color": "#aaaaaa",
+            "text": display_name,
+            "type": "text",
+            "wrap": True,
+            "margin": "none",
+            "size": "xs"
+          },
+          {
+            "color": "#0b5b67",
+            "text": "laporkan masalah",
+            "type": "text",
+            "wrap": True,
+            "margin": "none",
+            "size": "xs",
+            "align": "end",
+            "decoration": "underline",
+            "action": {
+              "type": "postback",
+              "label": "action",
+              "data": "laporkan masalah {}".format(order_id),
+              "displayText": "laporkan masalah {}".format(order_id)
+            }
+          }
+        ]
+      },
+      {
+        "color": "#0b5b67",
+        "text": "Detail Transaksi",
+        "type": "text",
+        "weight": "bold",
+        "size": "sm"
+      },
+      {
+        "weight": "bold",
+        "text": order_id,
+        "align": "center",
+        "type": "text",
+        "wrap": True,
+        "margin": "md",
+        "size": "xl"
+      },
+      {
+        "layout": "vertical",
+        "spacing": "sm",
+        "margin": "xs",
+        "type": "box",
+        "contents": [
+          {
+            "layout": "horizontal",
+            "margin": "none",
+            "type": "box",
+            "contents": [
+              {
+                "color": "#aaaaaa",
+                "text": created_at,
+                "align": "center",
+                "type": "text",
+                "size": "xs"
+              }
+            ]
+          },
+          {
+            "margin": "md",
+            "type": "separator"
+          },
+          {
+            "layout": "horizontal",
+            "margin": "xl",
+            "type": "box",
+            "contents": [
+              {
+                "flex": 0,
+                "weight": "bold",
+                "color": "#0b5b67",
+                "text": "Status",
+                "type": "text",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "layout": "horizontal",
+            "type": "box",
+            "contents": [
+              {
+                "color": "#555555",
+                "text": "Pembayaran",
+                "type": "text",
+                "flex": 0,
+                "size": "sm"
+              },
+              {
+                "color": "#111111",
+                "text": payment_status,
+                "align": "end",
+                "type": "text",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "layout": "horizontal",
+            "type": "box",
+            "contents": [
+              {
+                "color": "#555555",
+                "text": "Pemesanan (Pulsa)",
+                "type": "text",
+                "flex": 0,
+                "size": "sm"
+              },
+              {
+                "color": "#111111",
+                "text": order_status,
+                "align": "end",
+                "type": "text",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "margin": "xxl",
+            "type": "separator"
+          },
+          {
+            "layout": "horizontal",
+            "margin": "xxl",
+            "type": "box",
+            "contents": [
+              {
+                "color": "#555555",
+                "text": "Operator",
+                "type": "text",
+                "size": "sm"
+              },
+              {
+                "color": "#111111",
+                "text": operator,
+                "align": "end",
+                "type": "text",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "layout": "horizontal",
+            "type": "box",
+            "contents": [
+              {
+                "color": "#555555",
+                "text": "Nominal",
+                "type": "text",
+                "size": "sm"
+              },
+              {
+                "color": "#111111",
+                "text": nominal,
+                "align": "end",
+                "type": "text",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "layout": "horizontal",
+            "type": "box",
+            "contents": [
+              {
+                "color": "#555555",
+                "text": "Nomor Tujuan",
+                "type": "text",
+                "size": "sm"
+              },
+              {
+                "color": "#111111",
+                "text": phone_number,
+                "align": "end",
+                "type": "text",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "layout": "horizontal",
+            "type": "box",
+            "contents": [
+              {
+                "color": "#555555",
+                "text": "Harga",
+                "type": "text",
+                "size": "sm"
+              },
+              {
+                "color": "#111111",
+                "text": "Rp {}".format(price),
+                "align": "end",
+                "type": "text",
+                "size": "sm"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "margin": "xxl",
+        "type": "separator"
+      },
+      {
+        "action": {
+          "text": text_action,
+          "type": "message",
+          "label": label
+        },
+        "margin": "lg",
+        "style": "primary",
+        "type": "button",
+        "color": "#0b5b67"
+      }
+    ]
+  },
+  "styles": {
+    "footer": {
+      "separator": True
+    }
+  }
+}
     return transaksi_json
 
 def daftar_operator():
