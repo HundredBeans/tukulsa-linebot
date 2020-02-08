@@ -266,6 +266,6 @@ def get_transaction_by(line_id, order_id):
         'order_id': order_id
     }
     headers = {'content-type' : 'application/json'}
-    data = requests.put(url, data=json_data, headers=headers).text
+    data = requests.put(url, json=json_data, headers=headers).text
     parsed = json.loads(data)
     return parsed
