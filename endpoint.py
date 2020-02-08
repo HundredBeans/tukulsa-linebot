@@ -262,7 +262,7 @@ def get_transaction_by(line_id, order_id):
     """
     url = base_url + 'users/transactions/edit'
     json_data = {
-        'line_id': line_id
+        'line_id': line_id,
         'order_id': order_id
     }
     headers = {'content-type' : 'application/json'}
