@@ -247,16 +247,25 @@ def get_security_code(line_id):
     parsed = json.loads(data)
     return parsed
 
-def get_transaction_by(order_id):
+def get_transaction_by(line_id, order_id):
     """
-    GET Detail Transaction by order_id
+    GET Detail Transaction by order_id and line_id
 
     Parameters
     ----------
+        line_id : User's LINE ID as string
         order_id : User's specific order_id as string
 
     Return
     ------
         parsed response from TUKULSA Backend (Detail Transaction)
     """
-    pass
+    url = base_url + 'users/transactions/edit'
+    json_data = {
+        'line_id': line_id
+        'order_id': order_id
+    }
+    headers = {'content-type' : 'application/json'}
+    data = requests.put(url, data=json_data, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
