@@ -32,7 +32,7 @@ def detail_transaksi(display_name, order_id, created_at, payment_status, order_s
               "type": "postback",
               "label": "action",
               "data": "laporkan masalah {}".format(order_id),
-              "displayText": "laporkan masalah {}".format(order_id)
+              "displayText": "masalah {}".format(order_id)
             }
           }
         ]

@@ -139,11 +139,12 @@ def handle_text_message(event):
         if len(email) == 1:
             reply = "oke kak, akan saya tindak lanjuti dulu masalahnya baru nanti saya kabari ke email {} ya ka".format(email[0])
             end_text = text.replace(email[0], "(end report)")
+            end_text = "(after confirm) " + end_text 
             # Update report email
             report = update_report_email(user_id, end_text, email[0])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
         else:
-            text_report = text
+            text_report = text + " (end line)"
             reply = "ada lagi ka? Kalo sudah, tolong kirim alamat email yang bisa dihubungi ya kak"
             # Update text report to Database / Backend
             report = update_report_text(user_id, text_report)
@@ -428,7 +429,6 @@ def handle_text_message(event):
                 event.reply_token,[bot_message, message]
             )
         elif context == "cek riwayat":
-            reply_message = context_chat[context].format(display_name)
             # Get Transaction from Backend
             latest_transaction = get_latesttransaction_by(user_id)
             price = '{:,}'.format(latest_transaction['price'])
@@ -451,9 +451,15 @@ def handle_text_message(event):
                 json_input = json.dumps(bubble_string)
                 message = FlexSendMessage(
                     alt_text="Detail Transaksi", contents=json.loads(json_input))
+                text_riwayat = "Untuk cek riwayat transaksi, bisa chat 'cek riwayat transaksi' kapan aja atau bisa klik tombol Cek Riwayat Transaksi di bawah"
+                buttons_template = ButtonsTemplate(text = text_riwayat, actions=[
+                    URIAction(label='Cek Riwayat Transaksi', uri='line://app/1653837101-NwEQEqV9')
+                ])
+                button_message = TemplateSendMessage(
+                    alt_text='Konfirmasi Pembayaran', template=buttons_template)
                 line_bot_api.reply_message(
                     event.reply_token,
-                    message
+                    [message, button_message]
                 )
             else:
                 text_action = "cek status pembelian"
@@ -467,6 +473,17 @@ def handle_text_message(event):
                     event.reply_token,
                     message
                 )
+        elif context == "cek riwayat semua":
+            text_riwayat = "Klik tombol di bawah untuk cek riwayat transaksi"
+            buttons_template = ButtonsTemplate(text = text_riwayat, actions=[
+                URIAction(label='Cek Riwayat Transaksi', uri='line://app/1653837101-NwEQEqV9')
+            ])
+            button_message = TemplateSendMessage(
+                alt_text='Konfirmasi Pembayaran', template=buttons_template)
+            line_bot_api.reply_message(
+                event.reply_token,
+                button_message
+            )
         elif context == "admin login":
             code = get_security_code(user_id)['code']
             bot_message = context_chat[context].format(display_name)
@@ -1042,7 +1059,7 @@ def handle_postback(event):
                 event.reply_token, [TextSendMessage(text=first_reply), TextSendMessage(text=second_reply)]
             )
         else:
-            reply = "Baik kak {}, Bisa tolong dijelaskan detail masalahnya ya kak."
+            reply = "Baik kak {}, Bisa tolong dijelaskan detail masalahnya ya kak.".format(display_name)
             # CREATE REPORT di Backend
             report = create_report(user_id, order_id)
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
