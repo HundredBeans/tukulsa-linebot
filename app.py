@@ -53,7 +53,7 @@ from chatbot import bot_reply, context_chat
 # feature
 from feature import cek_provider
 # endpoint
-from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url, get_alltransactions_by, get_latesttransaction_by, get_security_code, get_transaction_by
+from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url, get_alltransactions_by, get_latesttransaction_by, get_security_code, get_transaction_by, create_report, update_report_email, update_report_text
 # flex template
 from flexTemplate import detail_transaksi, daftar_operator, daftar_pulsa_awal, daftar_pulsa_akhir
 
@@ -131,8 +131,25 @@ def handle_text_message(event):
     pattern_cek_transaksi = r"cek transaksi TUKULSAORDER.?-\d+"
     pattern_order = r"TUKULSAORDER.?-\d+"
     cek_transaksi_keyword = re.findall(pattern_cek_transaksi, text)
+    # Cek report status
+    status = get_chat_info(user_id)
+    pattern_email = r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)"
+    email = re.findall(pattern_email, text)
+    if status['status_report']:
+        if len(email) == 1:
+            reply = "oke kak, akan saya tindak lanjuti dulu masalahnya baru nanti saya kabari ke email {} ya ka".format(email[0])
+            end_text = text.replace(email[0], "(end report)")
+            # Update report email
+            report = update_report_email(user_id, end_text, email[0])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+        else:
+            text_report = text
+            reply = "ada lagi ka? Kalo sudah, tolong kirim alamat email yang bisa dihubungi ya kak"
+            # Update text report to Database / Backend
+            report = update_report_text(user_id, text_report)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
     ###### RESPONSE FLOW FOR BUYING PULSA (INPUT AND CONFIRMING) ######
-    if len(nomor) == 1 and len(nominal) == 1:
+    elif len(nomor) == 1 and len(nominal) == 1:
         nomor_kode = nomor[0][:4]
         data_provider = cek_provider(nomor_kode)
         nominal = nominal[0].replace(" ", "").replace(
@@ -160,8 +177,6 @@ def handle_text_message(event):
         # Cek provider dari nomor tersebut
         nomor_kode = nomor[0][:4]
         data_provider = cek_provider(nomor_kode)
-        # GET Nominal status
-        status = get_chat_info(user_id)
         ### Cek apakah user sudah ngasih info nominal ###
         if status['status_nominal'] and data_provider is not False:
             # Update nomor ke backend
@@ -1028,7 +1043,8 @@ def handle_postback(event):
             )
         else:
             reply = "Baik kak {}, Bisa tolong dijelaskan detail masalahnya ya kak."
-            # UPDATE STATE REPORT_STATUS di Backend
+            # CREATE REPORT di Backend
+            report = create_report(user_id, order_id)
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
             
     elif event.postback.data == 'datetime_postback':
