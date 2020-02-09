@@ -453,7 +453,7 @@ def handle_text_message(event):
                     alt_text="Detail Transaksi", contents=json.loads(json_input))
                 text_riwayat = "Untuk cek riwayat transaksi, bisa chat 'cek riwayat transaksi' kapan aja atau bisa klik tombol Cek Riwayat Transaksi di bawah"
                 buttons_template = ButtonsTemplate(text = text_riwayat, actions=[
-                    URIAction(label='Cek Riwayat Transaksi', uri='line://app/1653837101-NwEQEqV9')
+                    URIAction(label='Riwayat Transaksi', uri='line://app/1653837101-NwEQEqV9')
                 ])
                 button_message = TemplateSendMessage(
                     alt_text='Konfirmasi Pembayaran', template=buttons_template)
@@ -476,7 +476,7 @@ def handle_text_message(event):
         elif context == "cek riwayat semua":
             text_riwayat = "Klik tombol di bawah untuk cek riwayat transaksi"
             buttons_template = ButtonsTemplate(text = text_riwayat, actions=[
-                URIAction(label='Cek Riwayat Transaksi', uri='line://app/1653837101-NwEQEqV9')
+                URIAction(label='Riwayat Transaksi', uri='line://app/1653837101-NwEQEqV9')
             ])
             button_message = TemplateSendMessage(
                 alt_text='Konfirmasi Pembayaran', template=buttons_template)
