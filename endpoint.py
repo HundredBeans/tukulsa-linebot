@@ -269,3 +269,74 @@ def get_transaction_by(line_id, order_id):
     data = requests.put(url, json=json_data, headers=headers).text
     parsed = json.loads(data)
     return parsed
+
+def create_report(line_id, order_id):
+    """
+    Create report for specific user and order_id
+
+    Parameters
+    --
+        line_id : User's LINE ID as a string
+        order_id : User's specific order_id as a string
+
+    Return
+    --
+        Parsed reponse from TUKULSA Backend
+    """
+    url = base_url + 'users/report'
+    json_data = {
+        'line_id': line_id,
+        'order_id': order_id
+    }
+    headers = {'content-type' : 'application/json'}
+    data = requests.post(url, json=json_data, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
+
+def update_report_text(line_id, text):
+    """
+    Create report for specific user and order_id
+
+    Parameters
+    --
+        line_id : User's LINE ID as a string
+        text : User's report as a Text
+
+    Return
+    --
+        Parsed reponse from TUKULSA Backend
+    """
+    url = base_url + 'users/report'
+    json_data = {
+        'line_id': line_id,
+        'text': text
+    }
+    headers = {'content-type' : 'application/json'}
+    data = requests.put(url, json=json_data, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
+
+def update_report_email(line_id, text, email):
+    """
+    Create report for specific user and order_id
+
+    Parameters
+    --
+        line_id : User's LINE ID as a string
+        text : User's report as a Text
+        email : User's email as a string
+
+    Return
+    --
+        Parsed reponse from TUKULSA Backend
+    """
+    url = base_url + 'users/report'
+    json_data = {
+        'line_id': line_id,
+        'text': text,
+        'email': email
+    }
+    headers = {'content-type' : 'application/json'}
+    data = requests.put(url, json=json_data, headers=headers).text
+    parsed = json.loads(data)
+    return parsed
