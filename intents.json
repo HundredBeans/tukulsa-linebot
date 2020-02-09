@@ -37,7 +37,7 @@
   },
   {
     "tag": "cek riwayat",
-    "patterns": ["liat transaksi terakhir", "cek status pembelian", "cek transaksi yang terakhir dong", "cek riwayat transaksi dong", "cek status transaksi"],
+    "patterns": ["liat transaksi terakhir", "cek status pembelian", "cek transaksi yang terakhir dong", "cek status transaksi"],
     "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
     "context_set": ""
   },

@@ -451,7 +451,8 @@ def handle_text_message(event):
                 json_input = json.dumps(bubble_string)
                 message = FlexSendMessage(
                     alt_text="Detail Transaksi", contents=json.loads(json_input))
-                text_riwayat = "Untuk cek riwayat transaksi, bisa chat 'cek riwayat transaksi' kapan aja atau bisa klik tombol Cek Riwayat Transaksi di bawah"
+                message_2 = "Untuk cek riwayat transaksi, bisa chat 'cek riwayat transaksi' kapan aja atau bisa klik tombol Cek Riwayat Transaksi di bawah"
+                text_riwayat = "Klik tombol di bawah untuk cek riwayat transaksi"
                 buttons_template = ButtonsTemplate(text = text_riwayat, actions=[
                     URIAction(label='Cek Riwayat Transaksi', uri='line://app/1653837101-NwEQEqV9')
                 ])
@@ -459,7 +460,7 @@ def handle_text_message(event):
                     alt_text='Konfirmasi Pembayaran', template=buttons_template)
                 line_bot_api.reply_message(
                     event.reply_token,
-                    [message, button_message]
+                    [message, TextSendMessage(text=message_2), button_message]
                 )
             else:
                 text_action = "cek status pembelian"
