@@ -5,6 +5,8 @@ from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
 
+import string
+import re
 import numpy
 import tflearn
 import tensorflow
@@ -38,26 +40,33 @@ try:
     words, labels, training,output=pickle.load(c)
 
 except:
-  words = [] # list kata di pattern
+  initial_words = [] # list kata di pattern
   labels = [] # list tag
   docs_x = [] # list kalimat di pattern
   docs_y = [] # list tag dengan jumlah sama dengan jumlah pattern
 
   for intent in data ["intents"]:
     for pattern in intent["patterns"]:
-      # Mecah pattern jadi perkata
+      # Tokenized the data
       wrds = nltk.word_tokenize(pattern)
-      words.extend(wrds)
+      initial_words.extend(wrds)
       docs_x.append(wrds)
       docs_y.append(intent["tag"])
 
     if intent["tag"] not in labels:
       labels.append(intent["tag"])
 
-  # Memecah tiap kata menjadi lebih kecil dan tidak redundant
-  words = [stemmer.stem(w.lower()) for w in words if w != "?"]
-  words = list(set(words))
+  # Stemming and cleaning the data (remove punctuation and make it all lower case)
+  words = []
+  list_of_punctuation = string.punctuation
+  for word in initial_words:
+    word = word.lower()
+    word = re.sub('[%s]' % re.escape(list_of_punctuation), '', word)
+    word = stemmer.stem(word)
+    words.append(word)
 
+  words = list(set(words))
+  print(words)
   labels = labels
 
   training = []
