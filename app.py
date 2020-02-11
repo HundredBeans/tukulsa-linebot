@@ -138,13 +138,13 @@ def handle_text_message(event):
     if status['status_report']:
         if len(email) == 1:
             reply = "oke kak, akan saya tindak lanjuti dulu masalahnya baru nanti saya kabari ke email {} ya ka".format(email[0])
-            end_text = text.replace(email[0], "(end report)")
-            end_text = "(after confirm) " + end_text 
+            end_text = text.replace(email[0], "(email)")
+            end_text = "* " + end_text 
             # Update report email
             report = update_report_email(user_id, end_text, email[0])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
         else:
-            text_report = text + " (end line)"
+            text_report = text + " "
             reply = "ada lagi ka? Kalo sudah, tolong kirim alamat email yang bisa dihubungi ya kak"
             # Update text report to Database / Backend
             report = update_report_text(user_id, text_report)
