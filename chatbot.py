@@ -66,7 +66,6 @@ except:
     words.append(word)
 
   words = list(set(words))
-  print(words)
   labels = labels
 
   training = []
