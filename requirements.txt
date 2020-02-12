@@ -8,9 +8,9 @@ tensorflow==1.14
 sastrawi
 requests
 #face
+opencv-python-headless
 dlib
 face_recognition
-opencv-python
 imutils
 pyexiv2
 exif
