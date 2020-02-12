@@ -7,3 +7,11 @@ tflearn
 tensorflow==1.14
 sastrawi
 requests
+#face
+dlib
+face_recognition
+opencv-python
+imutils
+pyexiv2
+exif
+urllib2
