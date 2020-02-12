@@ -1023,17 +1023,17 @@ def handle_admin_login_message(event):
     verify_face = face_identification("tukulsa_admin.pickle", url)
     if verify_face == "ulum" or verify_face == "daffa":
         try:
-            face_url = request.url_root + 'result.jpg'
+            face_url = request.url_root + 'static/result.jpg'
             app.logger.info("url=" + url)
             code = get_security_code(user_id)['code']
             bot_message = "Silakan tuan {}, berikut security code-nya".format(verify_face)
-            line_bot_api.reply_message(event.reply_token, [ImageSendMessage(face_url, face_url), TextSendMessage(text=bot_message), TextSendMessage(text=code), TextSendMessage(text="bonus {}".format(url))])
+            line_bot_api.reply_message(event.reply_token, [ImageSendMessage(face_url, face_url), TextSendMessage(text=bot_message), TextSendMessage(text=code)])
         except:
             code = get_security_code(user_id)['code']
             bot_message = "Silakan tuan {}, berikut security code-nya".format(verify_face)
             line_bot_api.reply_message(event.reply_token, [ImageSendMessage(face_url, face_url), TextSendMessage(text=bot_message), TextSendMessage(text=code)])
     else:
-        line_bot_api.reply_message(event.reply_token, [TextSendMessage(text="Maaf, anda siapa?"), TextSendMessage(text=url)])
+        line_bot_api.reply_message(event.reply_token, [TextSendMessage(text="Maaf, aku balikin ya fotonya"), TextSendMessage(text=url)])
 
 
 @handler.add(MessageEvent, message=FileMessage)
