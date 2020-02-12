@@ -65,7 +65,7 @@ def face_identification(encoding, image_file, method="cnn"):
             y = top - 15 if top - 15 > 15 else top + 15
             # print(name)
             cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,0.75, (0, 255, 0), 2)
-    cv2.imwrite("result.jpg", image)
+    cv2.imwrite("static/result.jpg", image)
 
     if name=="ulum":
         # cv2.waitKey(10000)
