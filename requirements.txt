@@ -14,4 +14,4 @@ opencv-python
 imutils
 pyexiv2
 exif
-urllib2
+urllib3
