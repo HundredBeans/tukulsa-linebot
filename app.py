@@ -56,6 +56,8 @@ from feature import cek_provider
 from endpoint import get_chat_info, update_all, update_nominal, update_number, get_product_by, post_user, get_midtrans_url, get_alltransactions_by, get_latesttransaction_by, get_security_code, get_transaction_by, create_report, update_report_email, update_report_text
 # flex template
 from flexTemplate import detail_transaksi, daftar_operator, daftar_pulsa_awal, daftar_pulsa_akhir
+# face recognition
+from facerecognition import face_identification
 
 
 
@@ -485,9 +487,16 @@ def handle_text_message(event):
                 button_message
             )
         elif context == "admin login":
-            code = get_security_code(user_id)['code']
-            bot_message = context_chat[context].format(display_name)
-            line_bot_api.reply_message(event.reply_token, [TextSendMessage(text=bot_message), TextSendMessage(text=code)])
+            line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text='Foto dulu pak',
+                quick_reply=QuickReply(
+                    items=[
+                        QuickReplyButton(
+                            action=CameraAction(label="Klik ini!")
+                        )
+                    ])))
         else:
             reply_message = context_chat[context]
             # Tambahin display name ke dalam message
@@ -992,6 +1001,32 @@ def handle_content_message(event):
             TextSendMessage(text=request.host_url +
                             os.path.join('static', 'tmp', dist_name))
         ])
+
+
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_admin_login_message(event):
+    if isinstance(event.message, ImageMessage):
+        ext = 'jpg'
+    else:
+        return
+    user_id = event.source.user_id
+    message_content = line_bot_api.get_message_content(event.message.id)
+    with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
+        for chunk in message_content.iter_content():
+            tf.write(chunk)
+        tempfile_path = tf.name
+
+    dist_path = tempfile_path + '.' + ext
+    dist_name = os.path.basename(dist_path)
+    os.rename(tempfile_path, dist_path)
+    url = request.host_url + os.path.join('static', 'tmp', dist_name)
+    verify_face = face_identification("tukulsa_admin.pickle", url)
+    if verify_face == "ulum" or verify_face == "daffa":
+        face_url = request.url_root + '/result.jpg'
+        app.logger.info("url=" + url)
+        code = get_security_code(user_id)['code']
+        bot_message = "Silakan tuan {}, berikut security code-nya".format(verify_face)
+        line_bot_api.reply_message(event.reply_token, [ImageSendMessage(face_url, face_url), TextSendMessage(text=bot_message), TextSendMessage(text=code), TextSendMessage(text="bonus {}".format(url))])
 
 
 @handler.add(MessageEvent, message=FileMessage)
