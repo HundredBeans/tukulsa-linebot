@@ -1231,6 +1231,7 @@ def handle_postback(event):
             event.reply_token,message
         )
 
+
 @handler.add(BeaconEvent)
 def handle_beacon(event):
     line_bot_api.reply_message(
