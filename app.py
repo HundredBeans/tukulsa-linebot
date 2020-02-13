@@ -377,12 +377,13 @@ def handle_text_message(event):
                 product_code = "xld{}".format(nominal)
             else:
                 product_code = "h{}{}".format(operator, nominal)
-            midtrans_url = get_midtrans_url(user_id, nomor, product_code)['link_payment']
+            midtrans_return = get_midtrans_url(user_id, nomor, product_code)
             ############################## JIKA BALANCE KURANG #############################
-            if midtrans_url == "GAGAL":
+            if midtrans_return == "GAGAL":
                 gagal_message = "Maaf, sedang ada maintenance. Silakan coba beberapa jam lagi"
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=gagal_message))
             else:
+                midtrans_url = midtrans_return['link_payment']
                 bot_message_1 = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
                 buttons_template = ButtonsTemplate(text = bot_message_1, actions=[
                     URIAction(label='Bayar', uri=midtrans_url),
