@@ -379,7 +379,7 @@ def handle_text_message(event):
                 product_code = "h{}{}".format(operator, nominal)
             midtrans_return = get_midtrans_url(user_id, nomor, product_code)
             ############################## JIKA BALANCE KURANG #############################
-            if midtrans_return == "GAGAL":
+            if midtrans_return['status'] == "GAGAL":
                 gagal_message = "Maaf, sedang ada maintenance. Silakan coba beberapa jam lagi"
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=gagal_message))
             else:
