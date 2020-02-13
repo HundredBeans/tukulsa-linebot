@@ -2,7 +2,7 @@ import requests
 import json
 import os
 
-base_url = os.getenv('BASE_URL', None)
+base_url = 'https://tukulsa.site/'
 
 def post_user(line_id, display_name):
     """
