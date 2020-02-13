@@ -7,7 +7,7 @@
   },
   {
     "tag": "salam",
-    "patterns": ["samlekum", "assalamu'alaikum", "salamualaikum", "ass wr wb", "salam", "assalamualaikum"],
+    "patterns": ["samlekum", "assalamu'alaikum", "salamualaikum"],
     "responses": ["kumsalaam"],
     "context_set": ""
   },
@@ -19,7 +19,7 @@
   },
   {
     "tag": "beli pulsa",
-    "patterns": ["mau beli", "beli pulsa"],
+    "patterns": ["mau beli", "beli pulsa", "beli", "beli pulsa dong"],
     "responses": ["oke kak, boleh minta nomer hapenya kak? Formatnya 08xxxxxxxxxx ya"],
     "context_set": ""
   },
@@ -55,7 +55,7 @@
   },
   {
     "tag": "keluar konteks",
-    "patterns": ["main yuk", "ngobrol yuk", "bagi duit", "nikah yuk", "ah ngga asik", "main kuy"],
+    "patterns": ["main yuk", "ngobrol yuk", "bagi duit", "nikah yuk", "ah ngga asik", "main kuy", "gak peka ih"],
     "responses": ["sori cuy, gue cuma jual pulsa. Kalo mau beli bisa langsung bilang, jangan aneh-aneh"],
     "context_set": ""
   },
