@@ -8,6 +8,7 @@ tensorflow==1.14
 sastrawi
 requests
 #face
+scikit-build
 cmake
 opencv-python-headless
 dlib
