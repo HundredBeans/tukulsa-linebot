@@ -1,3 +1,17 @@
 line-bot-sdk
 flask
 werkzeug>=0.15.4
+nltk
+numpy
+tflearn
+tensorflow==1.14
+sastrawi
+requests
+#face
+opencv-python-headless
+dlib
+face_recognition
+imutils
+pyexiv2
+exif
+urllib3
