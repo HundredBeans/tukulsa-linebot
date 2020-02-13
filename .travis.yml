@@ -18,7 +18,7 @@ script:
 - sudo chmod +x deploy.sh
 - sudo chmod 600 deploy_rsa
 after_script:
-- sudo apt-get purge cmake
+- python -m pip install --upgrade pip
 - sed -i "s/os.getenv('BASE_URL')/'${BASE_URL}'/g" endpoint.py
 - sed -i "s/os.getenv('LINE_CHANNEL_SECRET', None)/'${LINE_CHANNEL_SECRET}'/g" app.py
 - sed -i "s/os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)/'${LINE_CHANNEL_ACCESS_TOKEN}'/g"
