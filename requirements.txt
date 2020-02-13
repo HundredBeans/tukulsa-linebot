@@ -8,6 +8,7 @@ tensorflow==1.14
 sastrawi
 requests
 #face
+cmake
 opencv-python-headless
 dlib
 face_recognition
