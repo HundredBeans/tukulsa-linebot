@@ -378,18 +378,22 @@ def handle_text_message(event):
             else:
                 product_code = "h{}{}".format(operator, nominal)
             midtrans_url = get_midtrans_url(user_id, nomor, product_code)['link_payment']
-            ######################################
-            bot_message_1 = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
-            buttons_template = ButtonsTemplate(text = bot_message_1, actions=[
-                URIAction(label='Bayar', uri=midtrans_url),
-                MessageAction(label="Cek Status", text="cek status pembelian")
-            ])
-            template_message = TemplateSendMessage(
-                alt_text='Konfirmasi Pembayaran', template=buttons_template)
-            bot_message_2 = "Untuk cek status transaksi, bisa chat 'cek status pembelian' kapan aja atau bisa klik tombol cek status di bawah"
-            message_2 = TextSendMessage(text=bot_message_2)
-            reset = update_all(user_id, "", "", False, False, "")
-            line_bot_api.reply_message(event.reply_token, [message_2, template_message])
+            ############################## JIKA BALANCE KURANG #############################
+            if midtrans_url == "GAGAL":
+                gagal_message = "Maaf, sedang ada maintenance. Silakan coba beberapa jam lagi"
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=gagal_message))
+            else:
+                bot_message_1 = "Silahkan klik tombol di bawah untuk melakukan pembayaran"
+                buttons_template = ButtonsTemplate(text = bot_message_1, actions=[
+                    URIAction(label='Bayar', uri=midtrans_url),
+                    MessageAction(label="Cek Status", text="cek status pembelian")
+                ])
+                template_message = TemplateSendMessage(
+                    alt_text='Konfirmasi Pembayaran', template=buttons_template)
+                bot_message_2 = "Untuk cek status transaksi, bisa chat 'cek status pembelian' kapan aja atau bisa klik tombol cek status di bawah"
+                message_2 = TextSendMessage(text=bot_message_2)
+                reset = update_all(user_id, "", "", False, False, "")
+                line_bot_api.reply_message(event.reply_token, [message_2, template_message])
         elif status['status_number']:
             bot_message = "kamu belum ngasih tau nominal pulsanya"
             line_bot_api.reply_message(event.reply_token, TextSendMessage(bot_message))
@@ -1020,10 +1024,11 @@ def handle_admin_login_message(event):
     dist_name = os.path.basename(dist_path)
     os.rename(tempfile_path, dist_path)
     url = request.host_url + os.path.join('static', 'tmp', dist_name)
-    verify_face = face_identification("tukulsa_admin.pickle", url)
+    unique_name = datetime.datetime.now().strftime("%d-%b-%Y-%H%M%S%f").replace(" ", "")
+    verify_face = face_identification("tukulsa_admin.pickle", url, unique_name)
     if verify_face == "ulum" or verify_face == "daffa":
         try:
-            face_url = request.url_root + 'static/result.jpg'
+            face_url = request.url_root + 'static/{}.jpg'.format(unique_name)
             app.logger.info("url=" + url)
             code = get_security_code(user_id)['code']
             bot_message = "Silakan tuan {}, berikut security code-nya".format(verify_face)
@@ -1059,8 +1064,6 @@ def handle_file_message(event):
 @handler.add(FollowEvent)
 def handle_follow(event):
     app.logger.info("Got Follow event:" + event.source.user_id)
-    line_bot_api.reply_message(
-        event.reply_token, TextSendMessage(text='Got follow event'))
 
 
 @handler.add(UnfollowEvent)
