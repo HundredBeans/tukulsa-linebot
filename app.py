@@ -117,12 +117,12 @@ def handle_text_message(event):
     """
     Handle Message Event from LINE Callback
     """
-    text = event.message.text
+    text = event.message.text.lower()
     user_id = event.source.user_id
     profile = line_bot_api.get_profile(user_id)
     display_name = profile.display_name
     user_status = profile.status_message
-    # add user into backend database
+    # Add user into backend database
     add_user = post_user(user_id, display_name)
     # Pattern nomor dan nominal pulsa
     nomor_pattern = r"08\d{9,11}"
@@ -502,6 +502,95 @@ def handle_text_message(event):
                             action=CameraAction(label="Klik ini!")
                         )
                     ])))
+        elif context == "telkomsel":
+            bot_message = "Berikut daftar pulsa {}nya kak".format('telkomsel')
+            reply_message = TextSendMessage(text=bot_message)
+            # GET Produk filter by provider
+            list_product = get_product_by('telkomsel')
+            # Create Flex Carousel Template
+            bubble_string = daftar_pulsa_awal(list_product)
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[reply_message, message]
+            )
+
+        elif context == "indosat":
+            bot_message = "Berikut daftar pulsa {}nya kak".format('indosat')
+            reply_message = TextSendMessage(text=bot_message)
+            # GET Produk filter by provider
+            list_product = get_product_by('indosat')
+            # Create Flex Carousel Template
+            bubble_string = daftar_pulsa_awal(list_product)
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[reply_message, message]
+            )
+        
+        elif context == "xl":
+            bot_message = "Berikut daftar pulsa {}nya kak".format('xl')
+            reply_message = TextSendMessage(text=bot_message)
+            # GET Produk filter by provider
+            list_product = get_product_by('xl')
+            # Create Flex Carousel Template
+            bubble_string = daftar_pulsa_awal(list_product)
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[reply_message, message]
+            )
+        
+        elif context == "three":
+            bot_message = "Berikut daftar pulsa {}nya kak".format('three')
+            reply_message = TextSendMessage(text=bot_message)
+            # GET Produk filter by provider
+            list_product = get_product_by('three')
+            # Create Flex Carousel Template
+            bubble_string = daftar_pulsa_awal(list_product)
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[reply_message, message]
+            )
+        
+        elif context == "axis":
+            bot_message = "Berikut daftar pulsa {}nya kak".format('axis')
+            reply_message = TextSendMessage(text=bot_message)
+            # GET Produk filter by provider
+            list_product = get_product_by('axis')
+            # Create Flex Carousel Template
+            bubble_string = daftar_pulsa_awal(list_product)
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[reply_message, message]
+            )
+        
+        elif context == "smartfren":
+            bot_message = "Berikut daftar pulsa {}nya kak".format('smartfren')
+            reply_message = TextSendMessage(text=bot_message)
+            # GET Produk filter by provider
+            list_product = get_product_by('smart')
+            # Create Flex Carousel Template
+            bubble_string = daftar_pulsa_awal(list_product)
+            # Convert dict into string
+            json_input = json.dumps(bubble_string)
+            message = FlexSendMessage(
+                alt_text="Daftar Produk", contents=json.loads(json_input))
+            line_bot_api.reply_message(
+                event.reply_token,[reply_message, message]
+            )
         else:
             reply_message = context_chat[context]
             # Tambahin display name ke dalam message

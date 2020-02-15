@@ -1,75 +1,208 @@
-{"intents": [
-  {
-    "tag": "ping",
-    "patterns": ["ping", "p", "ping!", "woy!", "woy"],
-    "responses": ["Kenape? Berisik amat"],
-    "context_set": ""
-  },
-  {
-    "tag": "salam",
-    "patterns": ["samlekum", "assalamu'alaikum", "salamualaikum"],
-    "responses": ["kumsalaam"],
-    "context_set": ""
-  },
-  {
-    "tag": "halo",
-    "patterns": ["halo", "Hi", "hai", "hello"],
-    "responses": ["haloo kak {}"],
-    "context_set": ""
-  },
-  {
-    "tag": "beli pulsa",
-    "patterns": ["mau beli", "beli pulsa", "beli", "beli pulsa dong"],
-    "responses": ["oke kak, boleh minta nomer hapenya kak? Formatnya 08xxxxxxxxxx ya"],
-    "context_set": ""
-  },
-  {
-    "tag": "complaint",
-    "patterns": ["Kok belum masuk", "Kok belum nambah", "sudah transfer, tapi", "mana nih pulsanya"],
-    "responses": ["oke kak {}, saya akan bantu cek status pembeliannya dulu ya kak"],
-    "context_set": ""
-  },
-  {
-    "tag": "terima kasih",
-    "patterns": ["terima kasih", "thank you", "arigatou", "suwun", "makasih", "arigato"],
-    "responses": ["iya kak {}, sama-sama :)"],
-    "context_set": ""
-  },
-  {
-    "tag": "cek riwayat",
-    "patterns": ["liat transaksi terakhir", "cek status pembelian", "cek transaksi yang terakhir dong", "cek status transaksi"],
-    "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
-    "context_set": ""
-  },
-  {
-    "tag": "cek riwayat semua",
-    "patterns": ["Mau cek riwayat transaksi", "Mau cek daftar transaksi", "liat semua daftar transaksi", "cek history transactions"],
-    "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
-    "context_set": ""
-  },
-  {
-    "tag": "cek produk",
-    "patterns": ["ada pulsa apa saja?", "ada pulsa apa aja?", "jual pulsa apa aja?", "mau liat daftar pulsanya dong", "daftar pulsanya ada?", "jual apa aja?"],
-    "responses": ["ada semua kak, lengkappp"],
-    "context_set": ""
-  },
-  {
-    "tag": "keluar konteks",
-    "patterns": ["main yuk", "ngobrol yuk", "bagi duit", "nikah yuk", "ah ngga asik", "main kuy", "gak peka ih"],
-    "responses": ["sori cuy, gue cuma jual pulsa. Kalo mau beli bisa langsung bilang, jangan aneh-aneh"],
-    "context_set": ""
-  },
-  {
-    "tag": "tanya beneran",
-    "patterns": ["ini apa?", "kamu siapa?", "kamu bisa apa?", "ini bot apa ya"],
-    "responses": ["aku Tukulsa, kerjaannya ya cuma nawarin pulsa sama jual pulsa. Jangan nanya doang, beli dong"],
-    "context_set": ""
-  },
-  {
-    "tag": "admin login",
-    "patterns": ["mau login", "admin mau login", "minta security code", "bagi security code"],
-    "responses": ["Silahkan, tuan {}"],
-    "context_set": ""
-  }
-]
+{
+  "intents": [
+    {
+      "tag": "ping",
+      "patterns": ["ping", "p", "ping!", "woy!", "woy"],
+      "responses": ["Kenape? Berisik amat"],
+      "context_set": ""
+    },
+    {
+      "tag": "salam",
+      "patterns": ["samlekum", "assalamu'alaikum", "salamualaikum"],
+      "responses": ["kumsalaam"],
+      "context_set": ""
+    },
+    {
+      "tag": "halo",
+      "patterns": ["halo", "Hi", "hai", "hello"],
+      "responses": ["haloo kak {}"],
+      "context_set": ""
+    },
+    {
+      "tag": "beli pulsa",
+      "patterns": ["mau beli", "beli pulsa", "beli", "beli pulsa dong"],
+      "responses": [
+        "oke kak, boleh minta nomer hapenya kak? Formatnya 08xxxxxxxxxx ya"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "complaint",
+      "patterns": [
+        "Kok belum masuk",
+        "Kok belum nambah",
+        "sudah transfer, tapi",
+        "mana nih pulsanya"
+      ],
+      "responses": [
+        "oke kak {}, saya akan bantu cek status pembeliannya dulu ya kak"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "terima kasih",
+      "patterns": [
+        "terima kasih",
+        "thank you",
+        "arigatou",
+        "suwun",
+        "makasih",
+        "arigato"
+      ],
+      "responses": ["iya kak {}, sama-sama :)"],
+      "context_set": ""
+    },
+    {
+      "tag": "cek riwayat",
+      "patterns": [
+        "liat transaksi terakhir",
+        "cek status pembelian",
+        "cek transaksi yang terakhir dong",
+        "cek status transaksi"
+      ],
+      "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
+      "context_set": ""
+    },
+    {
+      "tag": "cek riwayat semua",
+      "patterns": [
+        "Mau cek riwayat transaksi",
+        "Mau cek daftar transaksi",
+        "liat semua daftar transaksi",
+        "cek history transactions"
+      ],
+      "responses": ["oke kak {}, berikut riwayat transaksinya ya kak"],
+      "context_set": ""
+    },
+    {
+      "tag": "cek produk",
+      "patterns": [
+        "ada pulsa apa saja?",
+        "ada pulsa apa aja?",
+        "jual pulsa apa aja?",
+        "mau liat daftar pulsanya dong",
+        "daftar pulsanya ada?",
+        "jual apa aja?"
+      ],
+      "responses": ["ada semua kak, lengkappp"],
+      "context_set": ""
+    },
+    {
+      "tag": "keluar konteks",
+      "patterns": [
+        "main yuk",
+        "ngobrol yuk",
+        "bagi duit",
+        "nikah yuk",
+        "ah ngga asik",
+        "main kuy",
+        "gak peka ih"
+      ],
+      "responses": [
+        "sori cuy, gue cuma jual pulsa. Kalo mau beli bisa langsung bilang, jangan aneh-aneh"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "tanya beneran",
+      "patterns": [
+        "ini apa?",
+        "kamu siapa?",
+        "kamu bisa apa?",
+        "ini bot apa ya"
+      ],
+      "responses": [
+        "aku Tukulsa, kerjaannya ya cuma nawarin pulsa sama jual pulsa. Jangan nanya doang, beli dong"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "admin login",
+      "patterns": [
+        "mau login",
+        "admin mau login",
+        "minta security code",
+        "bagi security code"
+      ],
+      "responses": ["Silahkan, tuan {}"],
+      "context_set": ""
+    },
+    {
+      "tag": "harga",
+      "patterns": [
+        "pulsanya berapaan",
+        "harga pulsanya mahal",
+        "pulsanya murah apa mahal",
+        "harganya berapa"
+      ],
+      "responses": ["murah kok kak, "],
+      "context_set": ""
+    },
+    {
+      "tag": "telkomsel",
+      "patterns": [
+        "telkomsel",
+        "jual telkomsel ngga",
+        "ada pulsa telkomsel",
+        "telkomsel berapaan"
+      ],
+      "responses": "",
+      "context_set": ""
+    },
+    {
+      "tag": "indosat",
+      "patterns": [
+        "indosat",
+        "jual indosat ngga",
+        "ada pulsa indosat",
+        "indosat berapaan"
+      ],
+      "responses": "",
+      "context_set": ""
+    },
+    {
+      "tag": "xl",
+      "patterns": [
+        "xl",
+        "jual xl ngga",
+        "ada pulsa xl",
+        "xl berapaan"
+      ],
+      "responses": "",
+      "context_set": ""
+    },
+    {
+      "tag": "three",
+      "patterns": [
+        "three",
+        "jual three ngga",
+        "ada pulsa three",
+        "three berapaan"
+      ],
+      "responses": "",
+      "context_set": ""
+    },
+    {
+      "tag": "axis",
+      "patterns": [
+        "axis",
+        "jual axis ngga",
+        "ada pulsa axis",
+        "axis berapaan"
+      ],
+      "responses": "",
+      "context_set": ""
+    },
+    {
+      "tag": "smartfren",
+      "patterns": [
+        "smartfren",
+        "jual smartfren ngga",
+        "ada pulsa smartfren",
+        "smartfren berapaan"
+      ],
+      "responses": "",
+      "context_set": ""
+    }
+  ]
 }
