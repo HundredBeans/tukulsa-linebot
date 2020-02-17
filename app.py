@@ -117,7 +117,7 @@ def handle_text_message(event):
     """
     Handle Message Event from LINE Callback
     """
-    text = event.message.text.lower()
+    text = event.message.text
     user_id = event.source.user_id
     profile = line_bot_api.get_profile(user_id)
     display_name = profile.display_name
