@@ -4,7 +4,7 @@ werkzeug>=0.15.4
 nltk
 numpy
 tflearn
-tensorflow==1.14
+tensorflow==2.5.0
 sastrawi
 requests
 #face
